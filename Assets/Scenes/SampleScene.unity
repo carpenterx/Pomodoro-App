@@ -3827,25 +3827,7 @@ MonoBehaviour:
   - {fileID: 1909359361}
   soundsDropdown: {fileID: 508774471}
   audioSource: {fileID: 519420033}
-  audioClips:
-  - {fileID: 8300000, guid: bc3873b50cff597488e5fb6371638866, type: 3}
-  - {fileID: 8300000, guid: e868e1cf83878af4ca0315ef34b68734, type: 3}
-  - {fileID: 8300000, guid: 8c2cdb599183ec44192288cef96e6817, type: 3}
-  - {fileID: 8300000, guid: 8a47b837472753e44b7e4f2329b0a3ea, type: 3}
-  - {fileID: 8300000, guid: ebe3cf5093f5b6744bcc40536ed4efc9, type: 3}
-  - {fileID: 8300000, guid: 5a507af8cf14fc146993474933f49211, type: 3}
-  - {fileID: 8300000, guid: 8aa3a0787d5bca04096af16055c5b525, type: 3}
-  - {fileID: 8300000, guid: 08e9988d22d0af844b42d5bc026bde21, type: 3}
-  - {fileID: 8300000, guid: 530606600a3be054890e26fc1d87f278, type: 3}
-  - {fileID: 8300000, guid: 5ea696e9e47f4e34993c3cefd960f9a3, type: 3}
-  - {fileID: 8300000, guid: 68e7be8e070bc37488dc4d765393a1fc, type: 3}
-  - {fileID: 8300000, guid: 1b1c882232fe5fd40a699ccdf426adae, type: 3}
-  - {fileID: 8300000, guid: e6a097a1aff66c742a79f051a693e8d7, type: 3}
-  - {fileID: 8300000, guid: ff40de313472d6342a7ac39491d79a56, type: 3}
-  - {fileID: 8300000, guid: 0e29f9b2b68b62944beac613fde35822, type: 3}
-  - {fileID: 8300000, guid: fb1036793135ea343888756b93f68ff1, type: 3}
-  - {fileID: 8300000, guid: 0d0879ab621c7ef42bb9982eb35faf6e, type: 3}
-  - {fileID: 8300000, guid: c018957cd6f6db54993107583c300b85, type: 3}
+  audioClips: []
 --- !u!1 &559589921
 GameObject:
   m_ObjectHideFlags: 0
