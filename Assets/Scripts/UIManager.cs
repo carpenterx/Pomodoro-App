@@ -20,6 +20,13 @@ public class UIManager : MonoBehaviour
     public AudioSource audioSource;
     public List<AudioClip> audioClips;
 
+    public ThemeColors redThemeColors;
+    public ThemeColors yellowThemeColors;
+    public ThemeColors greenThemeColors;
+    public ThemeColors tealThemeColors;
+    public ThemeColors purpleThemeColors;
+    public ThemeColors blueThemeColors;
+
     private List<string> audioClipNames = new List<string>();
 
     private ColorBlock currentColors;
@@ -409,32 +416,38 @@ public class UIManager : MonoBehaviour
 
     public void SetRedColor()
     {
-        SetColor("#c0392b", "#e74c3c");
+        //SetColor("#c0392b", "#e74c3c");
+        SetColor(redThemeColors);
     }
 
     public void SetYellowColor()
     {
-        SetColor("#f39c12", "#f1c40f");
+        //SetColor("#f39c12", "#f1c40f");
+        SetColor(yellowThemeColors);
     }
 
     public void SetGreenColor()
     {
-        SetColor("#27ae60", "#2ecc71");
+        //SetColor("#27ae60", "#2ecc71");
+        SetColor(greenThemeColors);
     }
 
     public void SetTealColor()
     {
-        SetColor("#16A085", "#1ABC9C");
+        //SetColor("#16A085", "#1ABC9C");
+        SetColor(tealThemeColors);
     }
 
     public void SetPurpleColor()
     {
-        SetColor("#8E44AD", "#9B59B6");
+        //SetColor("#8E44AD", "#9B59B6");
+        SetColor(purpleThemeColors);
     }
 
     public void SetBlueColor()
     {
-        SetColor("#2980b9", "#3498db");
+        //SetColor("#2980b9", "#3498db");
+        SetColor(blueThemeColors);
     }
 
     private Color GetColorFromHexString(string hexString)
@@ -456,9 +469,22 @@ public class UIManager : MonoBehaviour
         ChangeCurrentColor(normalColor, highlightedColor);
     }
 
+    private void SetColor(ThemeColors themeColors)
+    {
+        ProfileData.Current.ButtonNormalColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.normalColor);
+        ProfileData.Current.ButtonHighlightedColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.highlightedColor);
+        ChangeCurrentColor(themeColors);
+    }
+
     private void ChangeCurrentColor(string normalColor, string highlightedColor)
     {
         currentColors = BuildColorBlock(normalColor, highlightedColor);
+        UpdateAllColors();
+    }
+
+    private void ChangeCurrentColor(ThemeColors themeColors)
+    {
+        currentColors = BuildColorBlock(themeColors);
         UpdateAllColors();
     }
 
@@ -482,6 +508,14 @@ public class UIManager : MonoBehaviour
         ColorBlock colorBlock = ColorBlock.defaultColorBlock;
         colorBlock.normalColor = GetColorFromHexString(normalColor);
         colorBlock.highlightedColor = GetColorFromHexString(highlightedColor);
+        return colorBlock;
+    }
+
+    private ColorBlock BuildColorBlock(ThemeColors themeColors)
+    {
+        ColorBlock colorBlock = ColorBlock.defaultColorBlock;
+        colorBlock.normalColor = themeColors.normalColor;
+        colorBlock.highlightedColor = themeColors.highlightedColor;
         return colorBlock;
     }
 }

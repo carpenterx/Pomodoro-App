@@ -3841,6 +3841,12 @@ MonoBehaviour:
   soundsDropdown: {fileID: 508774471}
   audioSource: {fileID: 519420033}
   audioClips: []
+  redThemeColors: {fileID: 11400000, guid: ba8a99f4423e64b41ae17e1efe17e0bd, type: 2}
+  yellowThemeColors: {fileID: 11400000, guid: b76b791c0b9a18a4c89c5475f8cb77bf, type: 2}
+  greenThemeColors: {fileID: 11400000, guid: 94239a3b46ed65e40bfd7fe0ef44557a, type: 2}
+  tealThemeColors: {fileID: 11400000, guid: 0d61cc922666b3b47b183fbc3d7d5046, type: 2}
+  purpleThemeColors: {fileID: 11400000, guid: 7f51496616879274a87986b49fb2d272, type: 2}
+  blueThemeColors: {fileID: 11400000, guid: 9a268a8b28531a24181932e3d4f85fbb, type: 2}
 --- !u!1 &559589921
 GameObject:
   m_ObjectHideFlags: 0
