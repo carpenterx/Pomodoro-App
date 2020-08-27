@@ -462,12 +462,12 @@ public class UIManager : MonoBehaviour
         ChangeCurrentColor(ProfileData.Current.ButtonNormalColor, ProfileData.Current.ButtonHighlightedColor);
     }
 
-    private void SetColor(string normalColor, string highlightedColor)
+    /*private void SetColor(string normalColor, string highlightedColor)
     {
         ProfileData.Current.ButtonNormalColor = normalColor;
         ProfileData.Current.ButtonHighlightedColor = highlightedColor;
         ChangeCurrentColor(normalColor, highlightedColor);
-    }
+    }*/
 
     private void SetColor(ThemeColors themeColors)
     {
