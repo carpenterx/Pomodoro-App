@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -51,19 +50,15 @@ public class UIManager : MonoBehaviour
         if(loadedData != null)
         {
             ProfileData.Current = loadedData;
-            // the pomodoros list should always have a pomodoro in it
-            // here we just generate a default pomodoro and add it to the current profile
             AddDefaultPomodoroFallback();
         }
         else
         {
             ProfileData.Current.ButtonNormalColor = "#16A085";
             ProfileData.Current.ButtonHighlightedColor = "#1ABC9C";
-            // the pomodoros list should always have a pomodoro in it
-            // here we just generate a default pomodoro and add it to the current profile
+            
             AddDefaultPomodoroFallback();
 
-            //ProfileData.ChangeFileName(ProfileData.DefaultFileName);
             JsonSave.Save(ProfileData.Current);
         }
 
@@ -119,6 +114,8 @@ public class UIManager : MonoBehaviour
 
     private void AddDefaultPomodoroFallback()
     {
+        // the pomodoros list should always have a pomodoro in it
+        // here we just generate a default pomodoro and add it to the current profile
         if (ProfileData.Current.Pomodoros.Count == 0)
         {
             Pomodoro defaultPomodoro = new Pomodoro("default", 900, "victory");
@@ -414,41 +411,37 @@ public class UIManager : MonoBehaviour
         JsonSave.Save(ProfileData.Current);
     }
 
+    #region Set Colors
     public void SetRedColor()
     {
-        //SetColor("#c0392b", "#e74c3c");
         SetColor(redThemeColors);
     }
 
     public void SetYellowColor()
     {
-        //SetColor("#f39c12", "#f1c40f");
         SetColor(yellowThemeColors);
     }
 
     public void SetGreenColor()
     {
-        //SetColor("#27ae60", "#2ecc71");
         SetColor(greenThemeColors);
     }
 
     public void SetTealColor()
     {
-        //SetColor("#16A085", "#1ABC9C");
         SetColor(tealThemeColors);
     }
 
     public void SetPurpleColor()
     {
-        //SetColor("#8E44AD", "#9B59B6");
         SetColor(purpleThemeColors);
     }
 
     public void SetBlueColor()
     {
-        //SetColor("#2980b9", "#3498db");
         SetColor(blueThemeColors);
     }
+    #endregion
 
     private Color GetColorFromHexString(string hexString)
     {
@@ -461,13 +454,6 @@ public class UIManager : MonoBehaviour
     {
         ChangeCurrentColor(ProfileData.Current.ButtonNormalColor, ProfileData.Current.ButtonHighlightedColor);
     }
-
-    /*private void SetColor(string normalColor, string highlightedColor)
-    {
-        ProfileData.Current.ButtonNormalColor = normalColor;
-        ProfileData.Current.ButtonHighlightedColor = highlightedColor;
-        ChangeCurrentColor(normalColor, highlightedColor);
-    }*/
 
     private void SetColor(ThemeColors themeColors)
     {
