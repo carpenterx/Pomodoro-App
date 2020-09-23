@@ -21,7 +21,7 @@ public class FileBrowser : MonoBehaviour
 
     public UnityEvent fileSelectedEvent = new UnityEvent();
 
-    private static string defaultPath = @"C:\Users\jorda\Desktop\work\AI\ARC\data\training";
+    private static string defaultPath = @"C:\Users\jorda\Desktop\announcer";
     private string currentFileSelection = "";
 
     private string pickedFilePath = "";
