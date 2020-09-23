@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
     public AudioSource audioSource;
-    public List<AudioClip> audioClips;
+    private List<AudioClip> audioClips = new List<AudioClip>();
 
     public ThemeColors redThemeColors;
     public ThemeColors yellowThemeColors;
@@ -32,15 +32,22 @@ public class UIManager : MonoBehaviour
 
     private TimeKeeper timeKeeper;
 
+    private static string noSoundString = "No sound";
+
     private void Awake()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
 
-        foreach (AudioClip clip in audioClips)
+        /*foreach (AudioClip clip in audioClips)
         {
             audioClipNames.Add(clip.name);
         }
 
+        soundsDropdown.ClearOptions();
+        soundsDropdown.AddOptions(audioClipNames);*/
+
+        //audioClips.Add(null);
+        audioClipNames.Add(noSoundString);
         soundsDropdown.ClearOptions();
         soundsDropdown.AddOptions(audioClipNames);
 
@@ -129,20 +136,15 @@ public class UIManager : MonoBehaviour
         {
             audioSource.Stop();
         }
-        audioSource.PlayOneShot(audioClips[soundsDropdown.value]);
+        if(soundsDropdown.options[soundsDropdown.value].text != noSoundString)
+        {
+            audioSource.PlayOneShot(audioClips[soundsDropdown.value]);
+        }
     }
 
     public void PlayEndSound(string soundName)
     {
-        AudioClip clip = audioClips.Find(c => c.name == soundName);
-        if(clip != null)
-        {
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-            audioSource.PlayOneShot(clip);
-        }
+        PlaySoundClip(soundName);
     }
 
     public void PlayClipSound()
@@ -150,7 +152,24 @@ public class UIManager : MonoBehaviour
         if(ProfileData.SelectedPomodoroIndex != -1)
         {
             Pomodoro pomodoro = ProfileData.Current.Pomodoros[ProfileData.SelectedPomodoroIndex];
-            string soundName = pomodoro.SoundName;
+            PlaySoundClip(pomodoro.SoundName);
+            /*string soundName = pomodoro.SoundName;
+            AudioClip clip = audioClips.Find(c => c.name == soundName);
+            if (clip != null)
+            {
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+                audioSource.PlayOneShot(clip);
+            }*/
+        }
+    }
+
+    private void PlaySoundClip(string soundName)
+    {
+        if (soundName != noSoundString)
+        {
             AudioClip clip = audioClips.Find(c => c.name == soundName);
             if (clip != null)
             {
