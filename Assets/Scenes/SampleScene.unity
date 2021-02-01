@@ -3840,7 +3840,6 @@ MonoBehaviour:
   - {fileID: 1909359361}
   soundsDropdown: {fileID: 508774471}
   audioSource: {fileID: 519420033}
-  audioClips: []
   redThemeColors: {fileID: 11400000, guid: ba8a99f4423e64b41ae17e1efe17e0bd, type: 2}
   yellowThemeColors: {fileID: 11400000, guid: b76b791c0b9a18a4c89c5475f8cb77bf, type: 2}
   greenThemeColors: {fileID: 11400000, guid: 94239a3b46ed65e40bfd7fe0ef44557a, type: 2}
@@ -4132,6 +4131,7 @@ GameObject:
   - component: {fileID: 667572321}
   - component: {fileID: 667572323}
   - component: {fileID: 667572322}
+  - component: {fileID: 667572324}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -4199,6 +4199,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667572320}
   m_CullTransparentMesh: 0
+--- !u!114 &667572324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667572320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 0.50980395}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &669823452
 GameObject:
   m_ObjectHideFlags: 0
