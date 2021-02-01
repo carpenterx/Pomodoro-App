@@ -152,7 +152,7 @@ public class UIManager : MonoBehaviour
         if(ProfileData.SelectedPomodoroIndex != -1)
         {
             Pomodoro pomodoro = ProfileData.Current.Pomodoros[ProfileData.SelectedPomodoroIndex];
-            PlaySoundClip(pomodoro.SoundName);
+            PlaySoundClip(pomodoro.SoundPath);
             /*string soundName = pomodoro.SoundName;
             AudioClip clip = audioClips.Find(c => c.name == soundName);
             if (clip != null)
@@ -238,7 +238,7 @@ public class UIManager : MonoBehaviour
         Text[] textBoxes = button.GetComponentsInChildren<Text>();
         textBoxes[0].text = ProfileData.Current.Pomodoros[index].Name;
         textBoxes[2].text = ProfileData.Current.Pomodoros[index].Duration.ToString();
-        textBoxes[4].text = ProfileData.Current.Pomodoros[index].SoundName;
+        textBoxes[4].text = ProfileData.Current.Pomodoros[index].SoundPath;
         Image[] images = button.GetComponentsInChildren<Image>();
         if(index == ProfileData.Current.PomodoroPlayIndex)
         {
@@ -255,7 +255,7 @@ public class UIManager : MonoBehaviour
         ProfileData.SetSelectedPomodoro(index);
         pomNameInput.text = ProfileData.Current.Pomodoros[index].Name;
         pomSecondsInput.text = ProfileData.Current.Pomodoros[index].Duration.ToString();
-        int soundIndex = audioClips.FindIndex(c => c.name == ProfileData.Current.Pomodoros[index].SoundName);
+        int soundIndex = audioClips.FindIndex(c => c.name == ProfileData.Current.Pomodoros[index].SoundPath);
         soundsDropdown.value = soundIndex;
     }
 
@@ -386,7 +386,7 @@ public class UIManager : MonoBehaviour
         Text[] textBoxes = button.GetComponentsInChildren<Text>();
         textBoxes[0].text = ProfileData.Current.Pomodoros[index].Name;
         textBoxes[2].text = ProfileData.Current.Pomodoros[index].Duration.ToString();
-        textBoxes[4].text = ProfileData.Current.Pomodoros[index].SoundName;
+        textBoxes[4].text = ProfileData.Current.Pomodoros[index].SoundPath;
     }
 
     public void DisplayCurrentPomodoroName(string name)

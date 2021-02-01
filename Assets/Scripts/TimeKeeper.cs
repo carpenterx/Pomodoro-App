@@ -86,7 +86,7 @@ public class TimeKeeper : MonoBehaviour
         // this way the 00 timer is visible
         // yield return new WaitForSeconds(1f);
         // play the end sound after the 00 time has been shown for one second
-        settingsManager.PlayEndSound(currentPomodoro.SoundName);
+        settingsManager.PlayEndSound(currentPomodoro.SoundPath);
 
         //Debug.Log(currentPomodoro.Name);
 

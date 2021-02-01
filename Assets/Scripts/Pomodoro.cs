@@ -5,16 +5,16 @@ public class Pomodoro
 {
     public string Name;
     public int Duration;
-    public string SoundName;
+    public string SoundPath;
 
-    public Pomodoro(string name, int duration, string soundName)
+    public Pomodoro(string name, int duration, string soundPath)
     {
         Name = name;
         Duration = duration;
-        SoundName = soundName;
+        SoundPath = soundPath;
     }
 
-    public Pomodoro(string name, string durationStr, string soundName)
+    public Pomodoro(string name, string durationStr, string soundPath)
     {
         Name = name;
         int duration;
@@ -26,6 +26,6 @@ public class Pomodoro
         {
             Duration = 0;
         }
-        SoundName = soundName;
+        SoundPath = soundPath;
     }
 }
