@@ -5,6 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using SFB;
+using System.Linq;
+using System.Collections;
+using UnityEngine.Networking;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,6 +18,7 @@ public class UIManager : MonoBehaviour
     public Button profilePrefab;
     public Button pomodoroPrefab;
     public ScrollRect profilesScrollViewer;
+    public ScrollRect soundsScrollViewer;
     public ScrollRect pomodorosScrollViewer;
     public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
@@ -34,7 +38,9 @@ public class UIManager : MonoBehaviour
 
     private TimeKeeper timeKeeper;
 
+    private static readonly string filePrefix = "file://";
     private static string noSoundString = "No sound";
+    private List<string> soundPathsList = new List<string>();
 
     private void Awake()
     {
@@ -49,6 +55,8 @@ public class UIManager : MonoBehaviour
         soundsDropdown.AddOptions(audioClipNames);*/
 
         //audioClips.Add(null);
+        soundPathsList.Add(null);
+        audioClips.Add(null);
         audioClipNames.Add(noSoundString);
         soundsDropdown.ClearOptions();
         soundsDropdown.AddOptions(audioClipNames);
@@ -184,10 +192,102 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void BrowseToSound()
+    public void BrowseToSounds()
     {
-        var extenstions = new[] { new ExtensionFilter("Sound Files", "ogg", "wav", "aif", "aiff", "mp3", "m4a") }; 
-        StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, false);
+        var extenstions = new[] { new ExtensionFilter("Sound Files", "ogg", "wav", "aif", "aiff", "mp3", "m4a") };
+        string[] selectedFiles = StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, true);
+        if(selectedFiles.Length > 0)
+        {
+            AddSounds(selectedFiles);
+            int startCount = soundPathsList.Count;
+            soundPathsList.AddRange(selectedFiles);
+            // pad the audioclips list before loading the audioclips
+            Debug.Log(audioClips.Count);
+            audioClips.AddRange(new AudioClip[selectedFiles.Length]);
+            Debug.Log(audioClips.Count);
+            StartCoroutine(GetAudioClips(startCount));
+        }
+    }
+
+    private void AddSounds(string[] soundPaths)
+    {
+        List<string> fileNamesList = new List<string>();
+        for (int i = 0; i < soundPaths.Length; i++)
+        {
+            //StartCoroutine(GetAudioClip(soundPaths[i]));
+
+            Button button = Instantiate(profilePrefab);
+            button.colors = currentColors;
+            button.transform.SetParent(soundsScrollViewer.content.transform, false);
+            string fileName = Path.GetFileNameWithoutExtension(soundPaths[i]);
+            fileNamesList.Add(fileName);
+            //button.GetComponent<Button>().onClick.AddListener(delegate { UpdateProfileText(fileName); });
+            button.GetComponentInChildren<Text>().text = fileName;
+            
+        }
+        soundsDropdown.AddOptions(fileNamesList);
+    }
+
+    private IEnumerator GetAudioClips(int startIndex)
+    {
+        int index = startIndex;
+        while (index < soundPathsList.Count)
+        {
+            string path = Path.Combine(filePrefix + soundPathsList[index]);
+            AudioType audioType = GetAudioType(path);
+            using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, audioType))
+            {
+                yield return request.SendWebRequest();
+
+                if (request.error == null)
+                {
+                    Debug.Log(index + ": " + path);
+                    audioClips[index] = DownloadHandlerAudioClip.GetContent(request);
+                }
+
+                index++;
+            }
+        }
+    }
+
+    private IEnumerator GetAudioClip(string soundPath)
+    {
+        string path = Path.Combine(filePrefix + soundPath);
+        AudioType audioType = GetAudioType(path);
+        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, audioType))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.error != null)
+            {
+                audioClips.Add(null);
+            }
+            else
+            {
+                audioClips.Add(DownloadHandlerAudioClip.GetContent(request));
+            }
+        }
+    }
+
+    private AudioType GetAudioType(string path)
+    {
+        string extension = Path.GetExtension(path).ToLower();
+        extension = extension.Replace(".", "");
+        switch (extension)
+        {
+            case "ogg":
+                return AudioType.OGGVORBIS;
+            case "wav":
+                return AudioType.WAV;
+            case "aif":
+            case "aiff":
+                return AudioType.AIFF;
+            case "mp3":
+            case "m4a":
+                return AudioType.MPEG;
+            default:
+                return AudioType.UNKNOWN;
+        }
     }
 
     private void GenerateProfilesDisplay()

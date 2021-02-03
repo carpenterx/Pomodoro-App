@@ -3899,6 +3899,7 @@ MonoBehaviour:
   pomodoroPrefab: {fileID: 6586148120245775706, guid: 481096ea6c81714468d9b0e2adb83eb1,
     type: 3}
   profilesScrollViewer: {fileID: 329049795}
+  soundsScrollViewer: {fileID: 1635859906}
   pomodorosScrollViewer: {fileID: 1223561658}
   themableButtonsList:
   - {fileID: 1101459351}
@@ -13041,7 +13042,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 519420035}
-        m_MethodName: BrowseToSound
+        m_MethodName: BrowseToSounds
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
