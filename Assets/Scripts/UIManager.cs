@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using SFB;
 
 public class UIManager : MonoBehaviour
 {
@@ -180,6 +182,12 @@ public class UIManager : MonoBehaviour
                 audioSource.PlayOneShot(clip);
             }
         }
+    }
+
+    public void BrowseToSound()
+    {
+        var extenstions = new[] { new ExtensionFilter("Sound Files", "ogg", "wav", "aif", "aiff", "mp3", "m4a") }; 
+        StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, false);
     }
 
     private void GenerateProfilesDisplay()
