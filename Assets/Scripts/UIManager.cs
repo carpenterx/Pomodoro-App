@@ -307,9 +307,18 @@ public class UIManager : MonoBehaviour
         profileNameInput.text = fileName;
     }
 
-    private void UpdateProfileListColors()
+    /*private void UpdateProfileListColors()
     {
         Button[] buttons = profilesScrollViewer.content.GetComponentsInChildren<Button>();
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].colors = currentColors;
+        }
+    }*/
+
+    private void UpdateScrollviewChildrenColors(ScrollRect parent)
+    {
+        Button[] buttons = parent.content.GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].colors = currentColors;
@@ -366,14 +375,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdatePomodorosListColors()
+    /*public void UpdatePomodorosListColors()
     {
         Button[] buttons = pomodorosScrollViewer.content.GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].colors = currentColors;
         }
-    }
+    }*/
 
     public void AddPomodoroToList()
     {
@@ -516,7 +525,8 @@ public class UIManager : MonoBehaviour
                 timeKeeper.LoadCurrentPomodoro();
                 LoadProfileColors();
 
-                UpdateProfileListColors();
+                //UpdateProfileListColors();
+                UpdateScrollviewChildrenColors(profilesScrollViewer);
                 GeneratePomodorosDisplay();
             }
         }
@@ -602,8 +612,11 @@ public class UIManager : MonoBehaviour
 
     private void UpdateAllColors()
     {
-        UpdatePomodorosListColors();
-        UpdateProfileListColors();
+        //UpdatePomodorosListColors();
+        UpdateScrollviewChildrenColors(pomodorosScrollViewer);
+        //UpdateProfileListColors();
+        UpdateScrollviewChildrenColors(profilesScrollViewer);
+        UpdateScrollviewChildrenColors(soundsScrollViewer);
         UpdateThemableButtonsColors();
     }
 

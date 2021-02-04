@@ -3916,6 +3916,8 @@ MonoBehaviour:
   - {fileID: 990902309}
   - {fileID: 126640672}
   - {fileID: 1909359361}
+  - {fileID: 2059383848}
+  - {fileID: 1881096862}
   soundsDropdown: {fileID: 508774471}
   audioSource: {fileID: 519420033}
   redThemeColors: {fileID: 11400000, guid: ba8a99f4423e64b41ae17e1efe17e0bd, type: 2}
@@ -14103,7 +14105,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1228, y: 740}
+  m_AnchoredPosition: {x: 1234, y: 740}
   m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2059383848
