@@ -46,15 +46,6 @@ public class UIManager : MonoBehaviour
     {
         audioSource = gameObject.GetComponent<AudioSource>();
 
-        /*foreach (AudioClip clip in audioClips)
-        {
-            audioClipNames.Add(clip.name);
-        }
-
-        soundsDropdown.ClearOptions();
-        soundsDropdown.AddOptions(audioClipNames);*/
-
-        //audioClips.Add(null);
         soundPathsList.Add(null);
         audioClips.Add(null);
         audioClipNames.Add(noSoundString);
@@ -135,7 +126,7 @@ public class UIManager : MonoBehaviour
         // here we just generate a default pomodoro and add it to the current profile
         if (ProfileData.Current.Pomodoros.Count == 0)
         {
-            Pomodoro defaultPomodoro = new Pomodoro("default", 900, "victory");
+            Pomodoro defaultPomodoro = new Pomodoro("default", 900, noSoundString);
             ProfileData.Current.Pomodoros.Add(defaultPomodoro);
         }
     }
@@ -162,17 +153,7 @@ public class UIManager : MonoBehaviour
         if(ProfileData.SelectedPomodoroIndex != -1)
         {
             Pomodoro pomodoro = ProfileData.Current.Pomodoros[ProfileData.SelectedPomodoroIndex];
-            PlaySoundClip(pomodoro.SoundPath);
-            /*string soundName = pomodoro.SoundName;
-            AudioClip clip = audioClips.Find(c => c.name == soundName);
-            if (clip != null)
-            {
-                if (audioSource.isPlaying)
-                {
-                    audioSource.Stop();
-                }
-                audioSource.PlayOneShot(clip);
-            }*/
+            PlaySoundClip(Path.GetFileNameWithoutExtension(pomodoro.SoundPath));
         }
     }
 
@@ -180,7 +161,7 @@ public class UIManager : MonoBehaviour
     {
         if (soundName != noSoundString)
         {
-            AudioClip clip = audioClips.Find(c => c.name == soundName);
+            AudioClip clip = audioClips.Find(c => c != null && c.name == soundName);
             if (clip != null)
             {
                 if (audioSource.isPlaying)
@@ -202,9 +183,7 @@ public class UIManager : MonoBehaviour
             int startCount = soundPathsList.Count;
             soundPathsList.AddRange(selectedFiles);
             // pad the audioclips list before loading the audioclips
-            Debug.Log(audioClips.Count);
             audioClips.AddRange(new AudioClip[selectedFiles.Length]);
-            Debug.Log(audioClips.Count);
             StartCoroutine(GetAudioClips(startCount));
         }
     }
@@ -214,8 +193,6 @@ public class UIManager : MonoBehaviour
         List<string> fileNamesList = new List<string>();
         for (int i = 0; i < soundPaths.Length; i++)
         {
-            //StartCoroutine(GetAudioClip(soundPaths[i]));
-
             Button button = Instantiate(profilePrefab);
             button.colors = currentColors;
             button.transform.SetParent(soundsScrollViewer.content.transform, false);
@@ -241,8 +218,8 @@ public class UIManager : MonoBehaviour
 
                 if (request.error == null)
                 {
-                    Debug.Log(index + ": " + path);
                     audioClips[index] = DownloadHandlerAudioClip.GetContent(request);
+                    audioClips[index].name = Path.GetFileNameWithoutExtension(soundPathsList[index]);
                 }
 
                 index++;
@@ -346,7 +323,7 @@ public class UIManager : MonoBehaviour
         Text[] textBoxes = button.GetComponentsInChildren<Text>();
         textBoxes[0].text = ProfileData.Current.Pomodoros[index].Name;
         textBoxes[2].text = ProfileData.Current.Pomodoros[index].Duration.ToString();
-        textBoxes[4].text = ProfileData.Current.Pomodoros[index].SoundPath;
+        textBoxes[4].text = Path.GetFileNameWithoutExtension(ProfileData.Current.Pomodoros[index].SoundPath);
         Image[] images = button.GetComponentsInChildren<Image>();
         if(index == ProfileData.Current.PomodoroPlayIndex)
         {
@@ -363,7 +340,7 @@ public class UIManager : MonoBehaviour
         ProfileData.SetSelectedPomodoro(index);
         pomNameInput.text = ProfileData.Current.Pomodoros[index].Name;
         pomSecondsInput.text = ProfileData.Current.Pomodoros[index].Duration.ToString();
-        int soundIndex = audioClips.FindIndex(c => c.name == ProfileData.Current.Pomodoros[index].SoundPath);
+        int soundIndex = audioClips.FindIndex(c => c!= null && c.name == Path.GetFileNameWithoutExtension(ProfileData.Current.Pomodoros[index].SoundPath));
         soundsDropdown.value = soundIndex;
     }
 
@@ -386,7 +363,7 @@ public class UIManager : MonoBehaviour
 
     public void AddPomodoroToList()
     {
-        ProfileData.Current.Pomodoros.Add(new Pomodoro(pomNameInput.text, pomSecondsInput.text, soundsDropdown.options[soundsDropdown.value].text));
+        ProfileData.Current.Pomodoros.Add(new Pomodoro(pomNameInput.text, pomSecondsInput.text, soundPathsList[soundsDropdown.value]));
 
         int pomodoroInd = ProfileData.Current.Pomodoros.Count - 1;
         CreatePomodoroPrefab(pomodoroInd);
