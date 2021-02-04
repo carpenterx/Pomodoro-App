@@ -75,6 +75,7 @@ public class UIManager : MonoBehaviour
 
         GenerateProfilesDisplay();
         GeneratePomodorosDisplay();
+        GenerateSoundsListFromPomodoros();
 
         #region Some test code
         /*// test code
@@ -86,6 +87,17 @@ public class UIManager : MonoBehaviour
         Debug.Log(firstElement.FindPropertyRelative("m_Name").stringValue);
         //Debug.Log(firstElement.FindPropertyRelative("m_Color").colorValue);*/
         #endregion
+    }
+
+    private void GenerateSoundsListFromPomodoros()
+    {
+        List<string> pomodoroPaths = new List<string>();
+        foreach (Pomodoro pomodoro in ProfileData.Current.Pomodoros)
+        {
+            pomodoroPaths.Add(pomodoro.SoundPath);
+        }
+        List<string> uniquePaths = pomodoroPaths.Distinct().ToList();
+        LoadSoundPathsList(uniquePaths);
     }
 
     public void UpdateSettingsUI()
@@ -176,8 +188,8 @@ public class UIManager : MonoBehaviour
     public void BrowseToSounds()
     {
         var extenstions = new[] { new ExtensionFilter("Sound Files", "ogg", "wav", "aif", "aiff", "mp3", "m4a") };
-        string[] selectedFiles = StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, true);
-        if(selectedFiles.Length > 0)
+        /*string[] selectedFiles = StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, true);
+        if (selectedFiles.Length > 0)
         {
             AddSounds(selectedFiles);
             int startCount = soundPathsList.Count;
@@ -185,13 +197,34 @@ public class UIManager : MonoBehaviour
             // pad the audioclips list before loading the audioclips
             audioClips.AddRange(new AudioClip[selectedFiles.Length]);
             StartCoroutine(GetAudioClips(startCount));
+        }*/
+        List<string> selectedFiles = StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, true).ToList();
+        if(selectedFiles.Count > 0)
+        {
+            /*AddSounds(selectedFiles);
+            int startCount = soundPathsList.Count;
+            soundPathsList.AddRange(selectedFiles);
+            // pad the audioclips list before loading the audioclips
+            audioClips.AddRange(new AudioClip[selectedFiles.Count]);
+            StartCoroutine(GetAudioClips(startCount));*/
+            LoadSoundPathsList(selectedFiles);
         }
     }
 
-    private void AddSounds(string[] soundPaths)
+    private void LoadSoundPathsList(List<string> soundPaths)
+    {
+        AddSounds(soundPaths);
+        int startCount = soundPathsList.Count;
+        soundPathsList.AddRange(soundPaths);
+        // pad the audioclips list before loading the audioclips
+        audioClips.AddRange(new AudioClip[soundPaths.Count]);
+        StartCoroutine(GetAudioClips(startCount));
+    }
+
+    private void AddSounds(List<string> soundPaths)
     {
         List<string> fileNamesList = new List<string>();
-        for (int i = 0; i < soundPaths.Length; i++)
+        for (int i = 0; i < soundPaths.Count; i++)
         {
             Button button = Instantiate(profilePrefab);
             button.colors = currentColors;
@@ -223,25 +256,6 @@ public class UIManager : MonoBehaviour
                 }
 
                 index++;
-            }
-        }
-    }
-
-    private IEnumerator GetAudioClip(string soundPath)
-    {
-        string path = Path.Combine(filePrefix + soundPath);
-        AudioType audioType = GetAudioType(path);
-        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, audioType))
-        {
-            yield return request.SendWebRequest();
-
-            if (request.error != null)
-            {
-                audioClips.Add(null);
-            }
-            else
-            {
-                audioClips.Add(DownloadHandlerAudioClip.GetContent(request));
             }
         }
     }
