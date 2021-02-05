@@ -86,6 +86,11 @@ public class UIManager : MonoBehaviour
             pomodoroPaths.Add(pomodoro.SoundPath);
         }
         List<string> uniquePaths = pomodoroPaths.Distinct().ToList();
+        int noSoundIndex = uniquePaths.IndexOf(noSoundString);
+        if(noSoundIndex != -1)
+        {
+            uniquePaths.RemoveAt(noSoundIndex);
+        }
         LoadSoundPathsList(uniquePaths);
     }
 
