@@ -110,6 +110,13 @@ public class TimeKeeper : MonoBehaviour
         timerText.text = TimeFormatter(time);
     }
 
+    public void ResetCurrentTime()
+    {
+        StopCoroutine(timerCoroutine);
+        timerCoroutine = null;
+        timerText.text = TimeFormatter(timerSeconds);
+    }
+
     private string TimeFormatter(int time)
     {
         int minutes = time / 60;
