@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
     {
         audioSource = gameObject.GetComponent<AudioSource>();
 
-        soundPathsList.Add(null);
+        soundPathsList.Add(noSoundString);
         audioClips.Add(null);
         audioClipNames.Add(noSoundString);
         soundsDropdown.ClearOptions();
@@ -76,17 +76,6 @@ public class UIManager : MonoBehaviour
         GenerateProfilesDisplay();
         GeneratePomodorosDisplay();
         GenerateSoundsListFromPomodoros();
-
-        #region Some test code
-        /*// test code
-        string colorPresetPath = "Assets/Editor/App Colors.colors";
-        UnityEngine.Object presetObject = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(colorPresetPath);
-        SerializedObject so = new SerializedObject(presetObject);
-        SerializedProperty presets = so.FindProperty("m_Presets");
-        SerializedProperty firstElement = presets.GetArrayElementAtIndex(0);
-        Debug.Log(firstElement.FindPropertyRelative("m_Name").stringValue);
-        //Debug.Log(firstElement.FindPropertyRelative("m_Color").colorValue);*/
-        #endregion
     }
 
     private void GenerateSoundsListFromPomodoros()
@@ -174,39 +163,20 @@ public class UIManager : MonoBehaviour
         if (soundName != noSoundString)
         {
             AudioClip clip = audioClips.Find(c => c != null && c.name == soundName);
-            if (clip != null)
+            if (audioSource.isPlaying)
             {
-                if (audioSource.isPlaying)
-                {
-                    audioSource.Stop();
-                }
-                audioSource.PlayOneShot(clip);
+                audioSource.Stop();
             }
+            audioSource.PlayOneShot(clip);
         }
     }
 
     public void BrowseToSounds()
     {
         var extenstions = new[] { new ExtensionFilter("Sound Files", "mp3", "ogg", "wav", "aif", "aiff") };
-        /*string[] selectedFiles = StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, true);
-        if (selectedFiles.Length > 0)
-        {
-            AddSounds(selectedFiles);
-            int startCount = soundPathsList.Count;
-            soundPathsList.AddRange(selectedFiles);
-            // pad the audioclips list before loading the audioclips
-            audioClips.AddRange(new AudioClip[selectedFiles.Length]);
-            StartCoroutine(GetAudioClips(startCount));
-        }*/
         List<string> selectedFiles = StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, true).ToList();
         if(selectedFiles.Count > 0)
         {
-            /*AddSounds(selectedFiles);
-            int startCount = soundPathsList.Count;
-            soundPathsList.AddRange(selectedFiles);
-            // pad the audioclips list before loading the audioclips
-            audioClips.AddRange(new AudioClip[selectedFiles.Count]);
-            StartCoroutine(GetAudioClips(startCount));*/
             LoadSoundPathsList(selectedFiles);
         }
     }
@@ -226,14 +196,16 @@ public class UIManager : MonoBehaviour
         List<string> fileNamesList = new List<string>();
         for (int i = 0; i < soundPaths.Count; i++)
         {
-            Button button = Instantiate(profilePrefab);
-            button.colors = currentColors;
-            button.transform.SetParent(soundsScrollViewer.content.transform, false);
-            string fileName = Path.GetFileNameWithoutExtension(soundPaths[i]);
-            fileNamesList.Add(fileName);
-            //button.GetComponent<Button>().onClick.AddListener(delegate { UpdateProfileText(fileName); });
-            button.GetComponentInChildren<Text>().text = fileName;
-            
+            if (soundPaths[i] != noSoundString)
+            {
+                Button button = Instantiate(profilePrefab);
+                button.colors = currentColors;
+                button.transform.SetParent(soundsScrollViewer.content.transform, false);
+                string fileName = Path.GetFileNameWithoutExtension(soundPaths[i]);
+                fileNamesList.Add(fileName);
+                //button.GetComponent<Button>().onClick.AddListener(delegate { UpdateProfileText(fileName); });
+                button.GetComponentInChildren<Text>().text = fileName;
+            }
         }
         soundsDropdown.AddOptions(fileNamesList);
     }
@@ -310,15 +282,6 @@ public class UIManager : MonoBehaviour
         profileNameInput.text = fileName;
     }
 
-    /*private void UpdateProfileListColors()
-    {
-        Button[] buttons = profilesScrollViewer.content.GetComponentsInChildren<Button>();
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].colors = currentColors;
-        }
-    }*/
-
     private void UpdateScrollviewChildrenColors(ScrollRect parent)
     {
         Button[] buttons = parent.content.GetComponentsInChildren<Button>();
@@ -377,15 +340,6 @@ public class UIManager : MonoBehaviour
             Destroy(button.gameObject);
         }
     }
-
-    /*public void UpdatePomodorosListColors()
-    {
-        Button[] buttons = pomodorosScrollViewer.content.GetComponentsInChildren<Button>();
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].colors = currentColors;
-        }
-    }*/
 
     public void AddPomodoroToList()
     {
@@ -615,9 +569,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateAllColors()
     {
-        //UpdatePomodorosListColors();
         UpdateScrollviewChildrenColors(pomodorosScrollViewer);
-        //UpdateProfileListColors();
         UpdateScrollviewChildrenColors(profilesScrollViewer);
         UpdateScrollviewChildrenColors(soundsScrollViewer);
         UpdateThemableButtonsColors();
