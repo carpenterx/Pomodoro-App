@@ -112,7 +112,10 @@ public class TimeKeeper : MonoBehaviour
 
     public void ResetCurrentTime()
     {
-        StopCoroutine(timerCoroutine);
+        if(timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+        }
         timerCoroutine = null;
         timerText.text = TimeFormatter(timerSeconds);
     }

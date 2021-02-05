@@ -105,6 +105,7 @@ public class UIManager : MonoBehaviour
         {
             ProfileData.Current.PomodoroPlayIndex = ProfileData.SelectedPomodoroIndex;
             timeKeeper.LoadCurrentPomodoro();
+            timeKeeper.ResetCurrentTime();
             UpdatePomodorosPlayIcon();
         }
     }
