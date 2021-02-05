@@ -187,7 +187,7 @@ public class UIManager : MonoBehaviour
 
     public void BrowseToSounds()
     {
-        var extenstions = new[] { new ExtensionFilter("Sound Files", "ogg", "wav", "aif", "aiff", "mp3") };
+        var extenstions = new[] { new ExtensionFilter("Sound Files", "mp3", "ogg", "wav", "aif", "aiff") };
         /*string[] selectedFiles = StandaloneFileBrowser.OpenFilePanel("Open Sound File", "", extenstions, true);
         if (selectedFiles.Length > 0)
         {
