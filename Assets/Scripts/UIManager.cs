@@ -243,20 +243,23 @@ public class UIManager : MonoBehaviour
         int index = startIndex;
         while (index < soundPathsList.Count)
         {
-            string path = Path.Combine(filePrefix + soundPathsList[index]);
-            AudioType audioType = GetAudioType(path);
-            using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, audioType))
+            if(soundPathsList[index] != noSoundString)
             {
-                yield return request.SendWebRequest();
-
-                if (request.error == null)
+                string path = Path.Combine(filePrefix + soundPathsList[index]);
+                AudioType audioType = GetAudioType(path);
+                using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, audioType))
                 {
-                    audioClips[index] = DownloadHandlerAudioClip.GetContent(request);
-                    audioClips[index].name = Path.GetFileNameWithoutExtension(soundPathsList[index]);
-                }
+                    yield return request.SendWebRequest();
 
-                index++;
+                    if (request.error == null)
+                    {
+                        audioClips[index] = DownloadHandlerAudioClip.GetContent(request);
+                        audioClips[index].name = Path.GetFileNameWithoutExtension(soundPathsList[index]);
+                    }
+                }
             }
+
+            index++;
         }
     }
 
