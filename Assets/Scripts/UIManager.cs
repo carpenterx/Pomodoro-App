@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     public ScrollRect pomodorosScrollViewer;
     public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
+    public BackgroundImage backgroundImage;
     public AudioSource audioSource;
     private List<AudioClip> audioClips = new List<AudioClip>();
 
@@ -76,6 +77,7 @@ public class UIManager : MonoBehaviour
         GenerateProfilesDisplay();
         GeneratePomodorosDisplay();
         GenerateSoundsListFromPomodoros();
+        backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
     }
 
     private void GenerateSoundsListFromPomodoros()

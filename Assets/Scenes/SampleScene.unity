@@ -3932,7 +3932,9 @@ MonoBehaviour:
   - {fileID: 1909359361}
   - {fileID: 2059383848}
   - {fileID: 1881096862}
+  - {fileID: 2062214543}
   soundsDropdown: {fileID: 508774471}
+  backgroundImage: {fileID: 314672645}
   audioSource: {fileID: 519420033}
   redThemeColors: {fileID: 11400000, guid: ba8a99f4423e64b41ae17e1efe17e0bd, type: 2}
   yellowThemeColors: {fileID: 11400000, guid: b76b791c0b9a18a4c89c5475f8cb77bf, type: 2}
