@@ -159,15 +159,15 @@ public class UIManager : MonoBehaviour
         if(ProfileData.SelectedPomodoroIndex != -1)
         {
             Pomodoro pomodoro = ProfileData.Current.Pomodoros[ProfileData.SelectedPomodoroIndex];
-            PlaySoundClip(Path.GetFileNameWithoutExtension(pomodoro.SoundPath));
+            PlaySoundClip(pomodoro.SoundPath);
         }
     }
 
-    private void PlaySoundClip(string soundName)
+    private void PlaySoundClip(string soundPath)
     {
-        if (soundName != noSoundString)
+        if (soundPath != noSoundString)
         {
-            AudioClip clip = audioClips.Find(c => c != null && c.name == soundName);
+            AudioClip clip = audioClips.Find(c => c != null && c.name == Path.GetFileNameWithoutExtension(soundPath));
             if (audioSource.isPlaying)
             {
                 audioSource.Stop();
