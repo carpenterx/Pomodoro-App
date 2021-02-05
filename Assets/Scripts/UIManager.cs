@@ -172,7 +172,10 @@ public class UIManager : MonoBehaviour
             {
                 audioSource.Stop();
             }
-            audioSource.PlayOneShot(clip);
+            if(clip != null)
+            {
+                audioSource.PlayOneShot(clip);
+            }
         }
     }
 
@@ -355,6 +358,24 @@ public class UIManager : MonoBehaviour
         RefreshSelectionListeners();
     }
 
+    public void EditPomodoro()
+    {
+        int selectedIndex = ProfileData.SelectedPomodoroIndex;
+        if (selectedIndex != -1)
+        {
+            ProfileData.Current.Pomodoros[selectedIndex] = new Pomodoro(pomNameInput.text, pomSecondsInput.text, soundPathsList[soundsDropdown.value]);
+            //PlaySoundClip(Path.GetFileNameWithoutExtension(pomodoro.SoundPath));
+            /*Button[] buttons = pomodorosScrollViewer.content.transform.GetComponentsInChildren<Button>();
+            Button button = buttons[ProfileData.SelectedPomodoroIndex];
+
+            Text[] textBoxes = button.GetComponentsInChildren<Text>();
+            textBoxes[0].text = pomodoro.Name;
+            textBoxes[2].text = pomodoro.Duration.ToString();
+            textBoxes[4].text = Path.GetFileNameWithoutExtension(pomodoro.SoundPath);*/
+            UpdatePomodoroPrefabText(selectedIndex);
+        }
+    }
+
     public void RemovePomodoroFromList()
     {
         if(ProfileData.Current.Pomodoros.Count > 1)
@@ -456,7 +477,7 @@ public class UIManager : MonoBehaviour
         Text[] textBoxes = button.GetComponentsInChildren<Text>();
         textBoxes[0].text = ProfileData.Current.Pomodoros[index].Name;
         textBoxes[2].text = ProfileData.Current.Pomodoros[index].Duration.ToString();
-        textBoxes[4].text = ProfileData.Current.Pomodoros[index].SoundPath;
+        textBoxes[4].text = Path.GetFileNameWithoutExtension(ProfileData.Current.Pomodoros[index].SoundPath);
     }
 
     public void DisplayCurrentPomodoroName(string name)
