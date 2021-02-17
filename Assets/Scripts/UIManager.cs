@@ -213,14 +213,14 @@ public class UIManager : MonoBehaviour
         PlaySoundClip(soundName);
     }
 
-    public void PlayClipSound()
+    /*public void PlayClipSound()
     {
         if(ProfileData.SelectedPomodoroIndex != -1)
         {
             Pomodoro pomodoro = ProfileData.Current.Pomodoros[ProfileData.SelectedPomodoroIndex];
             PlaySoundClip(pomodoro.SoundPath);
         }
-    }
+    }*/
 
     private void PlaySoundClip(string soundPath)
     {
