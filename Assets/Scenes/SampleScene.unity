@@ -4053,6 +4053,10 @@ MonoBehaviour:
   tealThemeColors: {fileID: 11400000, guid: 0d61cc922666b3b47b183fbc3d7d5046, type: 2}
   purpleThemeColors: {fileID: 11400000, guid: 7f51496616879274a87986b49fb2d272, type: 2}
   blueThemeColors: {fileID: 11400000, guid: 9a268a8b28531a24181932e3d4f85fbb, type: 2}
+  settingsHolder: {fileID: 2144561276}
+  appHolder: {fileID: 314672641}
+  audioMixer: {fileID: 24100000, guid: 392a29a91a997314b898460f8baddea1, type: 2}
+  volumeSlider: {fileID: 1408720358}
 --- !u!1 &559589921
 GameObject:
   m_ObjectHideFlags: 0
@@ -6363,7 +6367,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956997451}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fb586bfeaab4a6428e6f3a7c4dee0b8, type: 3}
   m_Name: 
@@ -6457,7 +6461,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 956997456}
+      - m_Target: {fileID: 519420035}
         m_MethodName: ShowSettings
         m_Mode: 1
         m_Arguments:
@@ -7218,7 +7222,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 956997456}
+      - m_Target: {fileID: 519420035}
         m_MethodName: HideSettings
         m_Mode: 1
         m_Arguments:
@@ -10416,7 +10420,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 956997456}
+      - m_Target: {fileID: 519420035}
         m_MethodName: SetVolume
         m_Mode: 0
         m_Arguments:

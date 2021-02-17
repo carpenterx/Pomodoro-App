@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
 
     private TimeKeeper timeKeeper;
     public GameObject settingsHolder;
+    public GameObject appHolder;
     public AudioMixer audioMixer;
     public Slider volumeSlider;
 
@@ -110,13 +111,23 @@ public class UIManager : MonoBehaviour
     {
         UpdateSettingsUI();
         settingsHolder.SetActive(true);
+        ChangeAppChildrenVisibility(false);
         timeKeeper.MenuPause();
     }
 
     public void HideSettings()
     {
         settingsHolder.SetActive(false);
+        ChangeAppChildrenVisibility(true);
         timeKeeper.MenuResume();
+    }
+
+    private void ChangeAppChildrenVisibility(bool visibility)
+    {
+        foreach (Transform child in appHolder.transform)
+        {
+            child.gameObject.SetActive(visibility);
+        }
     }
 
     public void SetVolume(float volume)
