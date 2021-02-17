@@ -27,6 +27,8 @@ public class BackgroundImage : MonoBehaviour
             texture.name = Path.GetFileNameWithoutExtension(imagePath);
             Sprite mySprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
             image.sprite = mySprite;
+            image.type = Image.Type.Tiled;
+            //image.type = Image.Type.Simple;
             ProfileData.Current.BackgroundImagePath = imagePath;
         }
     }

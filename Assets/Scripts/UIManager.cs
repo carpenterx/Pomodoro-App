@@ -8,6 +8,7 @@ using SFB;
 using System.Linq;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.Audio;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour
     public Button profilePrefab;
     public Button pomodoroPrefab;
     public ScrollRect profilesScrollViewer;
-    public ScrollRect soundsScrollViewer;
+    //public ScrollRect soundsScrollViewer;
     public ScrollRect pomodorosScrollViewer;
     public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
@@ -38,6 +39,9 @@ public class UIManager : MonoBehaviour
     private ColorBlock currentColors;
 
     private TimeKeeper timeKeeper;
+    public GameObject settingsHolder;
+    public AudioMixer audioMixer;
+    public Slider volumeSlider;
 
     private static readonly string filePrefix = "file://";
     private static string noSoundString = "No sound";
@@ -45,6 +49,13 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        settingsHolder.SetActive(false);
+        // gets the master volume and aligns it to the volume slider
+        // in theory, it should reverse the formula used for the volume scaling
+        float volumeValue;
+        audioMixer.GetFloat("masterVolume", out volumeValue);
+        volumeSlider.value = Mathf.Pow(10f, volumeValue / 20);
+
         audioSource = gameObject.GetComponent<AudioSource>();
 
         soundPathsList.Add(noSoundString);
@@ -78,6 +89,40 @@ public class UIManager : MonoBehaviour
         GeneratePomodorosDisplay();
         GenerateSoundsListFromPomodoros();
         backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (settingsHolder.activeSelf)
+            {
+                HideSettings();
+            }
+            else
+            {
+                ShowSettings();
+            }
+        }
+    }
+
+    public void ShowSettings()
+    {
+        UpdateSettingsUI();
+        settingsHolder.SetActive(true);
+        timeKeeper.MenuPause();
+    }
+
+    public void HideSettings()
+    {
+        settingsHolder.SetActive(false);
+        timeKeeper.MenuResume();
+    }
+
+    public void SetVolume(float volume)
+    {
+        //This calculates the volume properly since it does not scale in a linear fashion
+        audioMixer.SetFloat("masterVolume", Mathf.Log10(volume) * 20);
     }
 
     private void GenerateSoundsListFromPomodoros()
@@ -209,13 +254,13 @@ public class UIManager : MonoBehaviour
         {
             if (soundPaths[i] != noSoundString)
             {
-                Button button = Instantiate(profilePrefab);
-                button.colors = currentColors;
-                button.transform.SetParent(soundsScrollViewer.content.transform, false);
+                //Button button = Instantiate(profilePrefab);
+                //button.colors = currentColors;
+                //button.transform.SetParent(soundsScrollViewer.content.transform, false);
                 string fileName = Path.GetFileNameWithoutExtension(soundPaths[i]);
                 fileNamesList.Add(fileName);
                 //button.GetComponent<Button>().onClick.AddListener(delegate { UpdateProfileText(fileName); });
-                button.GetComponentInChildren<Text>().text = fileName;
+                //button.GetComponentInChildren<Text>().text = fileName;
             }
         }
         soundsDropdown.AddOptions(fileNamesList);
@@ -597,7 +642,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateScrollviewChildrenColors(pomodorosScrollViewer);
         UpdateScrollviewChildrenColors(profilesScrollViewer);
-        UpdateScrollviewChildrenColors(soundsScrollViewer);
+        //UpdateScrollviewChildrenColors(soundsScrollViewer);
         UpdateThemableButtonsColors();
     }
 
