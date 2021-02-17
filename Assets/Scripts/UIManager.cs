@@ -27,12 +27,14 @@ public class UIManager : MonoBehaviour
     public AudioSource audioSource;
     private List<AudioClip> audioClips = new List<AudioClip>();
 
-    public ThemeColors redThemeColors;
+    /*public ThemeColors redThemeColors;
     public ThemeColors yellowThemeColors;
     public ThemeColors greenThemeColors;
     public ThemeColors tealThemeColors;
     public ThemeColors purpleThemeColors;
-    public ThemeColors blueThemeColors;
+    public ThemeColors blueThemeColors;*/
+
+    public List<ThemeColors> themeColorsList = new List<ThemeColors>();
 
     private List<string> audioClipNames = new List<string>();
 
@@ -579,7 +581,7 @@ public class UIManager : MonoBehaviour
     }
 
     #region Set Colors
-    public void SetRedColor()
+    /*public void SetRedColor()
     {
         SetColor(redThemeColors);
     }
@@ -607,7 +609,7 @@ public class UIManager : MonoBehaviour
     public void SetBlueColor()
     {
         SetColor(blueThemeColors);
-    }
+    }*/
     #endregion
 
     private Color GetColorFromHexString(string hexString)
@@ -622,7 +624,7 @@ public class UIManager : MonoBehaviour
         ChangeCurrentColor(ProfileData.Current.ButtonNormalColor, ProfileData.Current.ButtonHighlightedColor);
     }
 
-    private void SetColor(ThemeColors themeColors)
+    public void SetColor(ThemeColors themeColors)
     {
         ProfileData.Current.ButtonNormalColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.normalColor);
         ProfileData.Current.ButtonHighlightedColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.highlightedColor);
