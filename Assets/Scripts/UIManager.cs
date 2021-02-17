@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     public ThemeColors purpleThemeColors;
     public ThemeColors blueThemeColors;*/
 
-    public List<ThemeColors> themeColorsList = new List<ThemeColors>();
+    //public List<ThemeColors> themeColorsList = new List<ThemeColors>();
 
     private List<string> audioClipNames = new List<string>();
 
