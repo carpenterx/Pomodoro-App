@@ -26,10 +26,18 @@ public class BackgroundImage : MonoBehaviour
             texture.LoadImage(imageData);
             texture.name = Path.GetFileNameWithoutExtension(imagePath);
             Sprite mySprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+            image.color = Color.white;
             image.sprite = mySprite;
             image.type = Image.Type.Tiled;
             //image.type = Image.Type.Simple;
             ProfileData.Current.BackgroundImagePath = imagePath;
         }
+    }
+
+    public void RemoveBackgroundImage()
+    {
+        image.sprite = null;
+        image.color = new Color(13f / 255f, 17f / 255f, 23f / 255f);
+        ProfileData.Current.BackgroundImagePath = "";
     }
 }
