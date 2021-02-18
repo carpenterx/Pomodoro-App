@@ -32,6 +32,10 @@ public class BackgroundImage : MonoBehaviour
             //image.type = Image.Type.Simple;
             ProfileData.Current.BackgroundImagePath = imagePath;
         }
+        else
+        {
+            RemoveBackgroundImage();
+        }
     }
 
     public void RemoveBackgroundImage()
