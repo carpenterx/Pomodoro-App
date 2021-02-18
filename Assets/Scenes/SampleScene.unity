@@ -3783,7 +3783,7 @@ MonoBehaviour:
   appHolder: {fileID: 314672641}
   audioMixer: {fileID: 24100000, guid: 392a29a91a997314b898460f8baddea1, type: 2}
   volumeSlider: {fileID: 1408720358}
-  profileNameText: {fileID: 0}
+  profileNameText: {fileID: 1898440303}
 --- !u!1 &559589921
 GameObject:
   m_ObjectHideFlags: 0
