@@ -683,7 +683,7 @@ GameObject:
   - component: {fileID: 97993763}
   - component: {fileID: 97993762}
   m_Layer: 5
-  m_Name: Colors Text
+  m_Name: ColorsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3783,6 +3783,7 @@ MonoBehaviour:
   appHolder: {fileID: 314672641}
   audioMixer: {fileID: 24100000, guid: 392a29a91a997314b898460f8baddea1, type: 2}
   volumeSlider: {fileID: 1408720358}
+  profileNameText: {fileID: 0}
 --- !u!1 &559589921
 GameObject:
   m_ObjectHideFlags: 0
@@ -5203,7 +5204,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 519420035}
-        m_MethodName: LoadProfile
+        m_MethodName: LoadProfileFromName
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12492,7 +12493,7 @@ GameObject:
   - component: {fileID: 1898440303}
   - component: {fileID: 1898440302}
   m_Layer: 5
-  m_Name: Profile Text
+  m_Name: ProfileText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13272,7 +13273,7 @@ GameObject:
   - component: {fileID: 2005760312}
   - component: {fileID: 2005760311}
   m_Layer: 5
-  m_Name: Pomodoros Text
+  m_Name: PomodorosText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14060,7 +14061,7 @@ GameObject:
   - component: {fileID: 2077039434}
   - component: {fileID: 2077039436}
   m_Layer: 5
-  m_Name: Volume Text
+  m_Name: VolumeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

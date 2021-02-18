@@ -2,7 +2,7 @@
 using System.Text;
 using UnityEngine;
 
-public static class JsonSave
+public static class JsonIO
 {
     public static void Save(ProfileData saveData)
     {
@@ -22,8 +22,9 @@ public static class JsonSave
         }
     }
 
-    public static object Load(ProfileData saveData)
+    public static object Load(string profileName)
     {
+        ProfileData.ChangeFileName(profileName);
         string savePath = ProfileData.SavePath;
         if (File.Exists(savePath))
         {

@@ -19,22 +19,12 @@ public class UIManager : MonoBehaviour
     public Button profilePrefab;
     public Button pomodoroPrefab;
     public ScrollRect profilesScrollViewer;
-    //public ScrollRect soundsScrollViewer;
     public ScrollRect pomodorosScrollViewer;
     public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
     public BackgroundImage backgroundImage;
     public AudioSource audioSource;
     private List<AudioClip> audioClips = new List<AudioClip>();
-
-    /*public ThemeColors redThemeColors;
-    public ThemeColors yellowThemeColors;
-    public ThemeColors greenThemeColors;
-    public ThemeColors tealThemeColors;
-    public ThemeColors purpleThemeColors;
-    public ThemeColors blueThemeColors;*/
-
-    //public List<ThemeColors> themeColorsList = new List<ThemeColors>();
 
     private List<string> audioClipNames = new List<string>();
 
@@ -45,6 +35,8 @@ public class UIManager : MonoBehaviour
     public GameObject appHolder;
     public AudioMixer audioMixer;
     public Slider volumeSlider;
+
+    public Text profileNameText;
 
     private static readonly string filePrefix = "file://";
     private static string noSoundString = "No sound";
@@ -68,30 +60,8 @@ public class UIManager : MonoBehaviour
         soundsDropdown.AddOptions(audioClipNames);
 
         timeKeeper = gameObject.GetComponent<TimeKeeper>();
-        // if there is no save data, set default values for app data
-        ProfileData loadedData = (ProfileData)JsonSave.Load(ProfileData.Current);
-        if(loadedData != null)
-        {
-            ProfileData.Current = loadedData;
-            AddDefaultPomodoroFallback();
-        }
-        else
-        {
-            ProfileData.Current.ButtonNormalColor = "#16A085";
-            ProfileData.Current.ButtonHighlightedColor = "#1ABC9C";
-            
-            AddDefaultPomodoroFallback();
 
-            JsonSave.Save(ProfileData.Current);
-        }
-
-        timeKeeper.LoadCurrentPomodoro();
-        LoadProfileColors();
-
-        GenerateProfilesDisplay();
-        GeneratePomodorosDisplay();
-        GenerateSoundsListFromPomodoros();
-        backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
+        LoadDefaultProfile();
     }
 
     private void Update()
@@ -215,15 +185,6 @@ public class UIManager : MonoBehaviour
         PlaySoundClip(soundName);
     }
 
-    /*public void PlayClipSound()
-    {
-        if(ProfileData.SelectedPomodoroIndex != -1)
-        {
-            Pomodoro pomodoro = ProfileData.Current.Pomodoros[ProfileData.SelectedPomodoroIndex];
-            PlaySoundClip(pomodoro.SoundPath);
-        }
-    }*/
-
     private void PlaySoundClip(string soundPath)
     {
         if (soundPath != noSoundString)
@@ -267,13 +228,8 @@ public class UIManager : MonoBehaviour
         {
             if (soundPaths[i] != noSoundString)
             {
-                //Button button = Instantiate(profilePrefab);
-                //button.colors = currentColors;
-                //button.transform.SetParent(soundsScrollViewer.content.transform, false);
                 string fileName = Path.GetFileNameWithoutExtension(soundPaths[i]);
                 fileNamesList.Add(fileName);
-                //button.GetComponent<Button>().onClick.AddListener(delegate { UpdateProfileText(fileName); });
-                //button.GetComponentInChildren<Text>().text = fileName;
             }
         }
         soundsDropdown.AddOptions(fileNamesList);
@@ -548,28 +504,62 @@ public class UIManager : MonoBehaviour
         if(profileNameInput.text != "")
         {
             ProfileData.ChangeFileName(profileNameInput.text);
-            JsonSave.Save(ProfileData.Current);
+            JsonIO.Save(ProfileData.Current);
             GenerateProfilesDisplay();
         }
     }
 
-    public void LoadProfile()
+    private void LoadProfile(string name)
+    {
+        ProfileData loadedData = (ProfileData)JsonIO.Load(name);
+        if (loadedData != null)
+        {
+            ProfileData.Current = loadedData;
+            AddDefaultPomodoroFallback();
+            timeKeeper.LoadCurrentPomodoro();
+            LoadProfileColors();
+
+            GenerateProfilesDisplay();
+            UpdateScrollviewChildrenColors(profilesScrollViewer);
+            GeneratePomodorosDisplay();
+            GenerateSoundsListFromPomodoros();
+            backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
+        }
+    }
+
+    private void LoadDefaultProfile()
+    {
+        // if there is no save data, set default values for app data
+        ProfileData loadedData = (ProfileData)JsonIO.Load(ProfileData.FileName);
+        if(loadedData != null)
+        {
+            ProfileData.Current = loadedData;
+            AddDefaultPomodoroFallback();
+        }
+        else
+        {
+            ProfileData.Current.ButtonNormalColor = "#16A085";
+            ProfileData.Current.ButtonHighlightedColor = "#1ABC9C";
+            
+            AddDefaultPomodoroFallback();
+
+            JsonIO.Save(ProfileData.Current);
+        }
+
+        timeKeeper.LoadCurrentPomodoro();
+        LoadProfileColors();
+
+        GenerateProfilesDisplay();
+        GeneratePomodorosDisplay();
+        GenerateSoundsListFromPomodoros();
+        backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
+    }
+
+    public void LoadProfileFromName()
     {
         if (profileNameInput.text != "")
         {
-            ProfileData.ChangeFileName(profileNameInput.text);
-            ProfileData loadedData = (ProfileData)JsonSave.Load(ProfileData.Current);
-            if (loadedData != null)
-            {
-                ProfileData.Current = loadedData;
-                AddDefaultPomodoroFallback();
-                timeKeeper.LoadCurrentPomodoro();
-                LoadProfileColors();
-
-                //UpdateProfileListColors();
-                UpdateScrollviewChildrenColors(profilesScrollViewer);
-                GeneratePomodorosDisplay();
-            }
+            LoadProfile(profileNameInput.text);
         }
     }
 
@@ -577,40 +567,8 @@ public class UIManager : MonoBehaviour
     {
         // the data gets saved to the last filepath, so I need to reset it to default first before autosaving
         ProfileData.ChangeFileName(ProfileData.DefaultFileName);
-        JsonSave.Save(ProfileData.Current);
+        JsonIO.Save(ProfileData.Current);
     }
-
-    #region Set Colors
-    /*public void SetRedColor()
-    {
-        SetColor(redThemeColors);
-    }
-
-    public void SetYellowColor()
-    {
-        SetColor(yellowThemeColors);
-    }
-
-    public void SetGreenColor()
-    {
-        SetColor(greenThemeColors);
-    }
-
-    public void SetTealColor()
-    {
-        SetColor(tealThemeColors);
-    }
-
-    public void SetPurpleColor()
-    {
-        SetColor(purpleThemeColors);
-    }
-
-    public void SetBlueColor()
-    {
-        SetColor(blueThemeColors);
-    }*/
-    #endregion
 
     private Color GetColorFromHexString(string hexString)
     {
@@ -655,7 +613,6 @@ public class UIManager : MonoBehaviour
     {
         UpdateScrollviewChildrenColors(pomodorosScrollViewer);
         UpdateScrollviewChildrenColors(profilesScrollViewer);
-        //UpdateScrollviewChildrenColors(soundsScrollViewer);
         UpdateThemableButtonsColors();
     }
 

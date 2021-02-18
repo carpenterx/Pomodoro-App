@@ -55,14 +55,12 @@ public class ProfileData
 
     public static void SetSelectedPomodoro(int index)
     {
-        //Debug.Log(index);
         SelectedPomodoroIndex = index;
     }
 
     public static void ResetSelectedPomodoro()
     {
         SelectedPomodoroIndex = -1;
-        //Debug.Log(SelectedPomodoroIndex);
     }
 
     public Pomodoro GetNextPomodoroToPlay()
