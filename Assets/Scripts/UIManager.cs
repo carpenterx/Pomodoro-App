@@ -515,6 +515,7 @@ public class UIManager : MonoBehaviour
         if (loadedData != null)
         {
             ProfileData.Current = loadedData;
+            profileNameText.text = String.Format("Profile: {0}", name);
             AddDefaultPomodoroFallback();
             timeKeeper.LoadCurrentPomodoro();
             LoadProfileColors();
