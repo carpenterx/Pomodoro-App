@@ -532,7 +532,7 @@ public class UIManager : MonoBehaviour
     private void LoadDefaultProfile()
     {
         // if there is no save data, set default values for app data
-        ProfileData loadedData = (ProfileData)JsonIO.Load(ProfileData.FileName);
+        ProfileData loadedData = (ProfileData)JsonIO.Load(ProfileData.DefaultFileName);
         if(loadedData != null)
         {
             ProfileData.Current = loadedData;
@@ -548,6 +548,7 @@ public class UIManager : MonoBehaviour
             JsonIO.Save(ProfileData.Current);
         }
 
+        profileNameText.text = String.Format("Profile: {0}", ProfileData.DefaultFileName);
         timeKeeper.LoadCurrentPomodoro();
         LoadProfileColors();
 
