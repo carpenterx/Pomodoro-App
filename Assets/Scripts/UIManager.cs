@@ -18,10 +18,11 @@ public class UIManager : MonoBehaviour
     public InputField pomSecondsInput;
     public Button profilePrefab;
     public Button pomodoroPrefab;
-    public ScrollRect profilesScrollViewer;
+    //public ScrollRect profilesScrollViewer;
     public ScrollRect pomodorosScrollViewer;
     public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
+    public Dropdown profilesDropdown;
     public BackgroundImage backgroundImage;
     public AudioSource audioSource;
     private List<AudioClip> audioClips = new List<AudioClip>();
@@ -281,31 +282,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void GenerateProfilesDisplay()
+    private void GenerateProfilesDisplay(string selectedValue)
     {
-        foreach (Transform button in profilesScrollViewer.content)
+        /*foreach (Transform button in profilesScrollViewer.content)
         {
             Destroy(button.gameObject);
-        }
+        }*/
         if(Directory.Exists(ProfileData.FolderName))
         {
             string[] profiles = Directory.GetFiles(ProfileData.FolderName, "*" + ProfileData.FileExtension);
+            List<string> namesList = new List<string>();
             for (int i = 0; i < profiles.Length; i++)
             {
-                Button button = Instantiate(profilePrefab);
-                button.colors = currentColors;
-                button.transform.SetParent(profilesScrollViewer.content.transform, false);
-                string fileName = Path.GetFileNameWithoutExtension(profiles[i]);
-                button.GetComponent<Button>().onClick.AddListener(delegate { UpdateProfileText(fileName); });
-                button.GetComponentInChildren<Text>().text = fileName;
+                //Button button = Instantiate(profilePrefab);
+                //button.colors = currentColors;
+                //button.transform.SetParent(profilesScrollViewer.content.transform, false);
+                namesList.Add(Path.GetFileNameWithoutExtension(profiles[i]));
+                //button.GetComponent<Button>().onClick.AddListener(delegate { UpdateProfileText(fileName); });
+                //button.GetComponentInChildren<Text>().text = fileName;
             }
+            profilesDropdown.ClearOptions();
+            profilesDropdown.AddOptions(namesList);
+            profilesDropdown.value = profilesDropdown.options.FindIndex(option => option.text == selectedValue);
         }
     }
 
-    public void UpdateProfileText(string fileName)
+    /*public void UpdateProfileText(string fileName)
     {
         profileNameInput.text = fileName;
-    }
+    }*/
 
     private void UpdateScrollviewChildrenColors(ScrollRect parent)
     {
@@ -505,7 +510,7 @@ public class UIManager : MonoBehaviour
         {
             ProfileData.ChangeFileName(profileNameInput.text);
             JsonIO.Save(ProfileData.Current);
-            GenerateProfilesDisplay();
+            GenerateProfilesDisplay(ProfileData.FileName);
         }
     }
 
@@ -521,8 +526,8 @@ public class UIManager : MonoBehaviour
             timeKeeper.LoadCurrentPomodoro();
             LoadProfileColors();
 
-            GenerateProfilesDisplay();
-            UpdateScrollviewChildrenColors(profilesScrollViewer);
+            GenerateProfilesDisplay(ProfileData.FileName);
+            //UpdateScrollviewChildrenColors(profilesScrollViewer);
             GeneratePomodorosDisplay();
             GenerateSoundsListFromPomodoros();
             backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
@@ -552,7 +557,7 @@ public class UIManager : MonoBehaviour
         timeKeeper.LoadCurrentPomodoro();
         LoadProfileColors();
 
-        GenerateProfilesDisplay();
+        GenerateProfilesDisplay(ProfileData.DefaultFileName);
         GeneratePomodorosDisplay();
         GenerateSoundsListFromPomodoros();
         backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
@@ -560,10 +565,7 @@ public class UIManager : MonoBehaviour
 
     public void LoadProfileFromName()
     {
-        if (profileNameInput.text != "")
-        {
-            LoadProfile(profileNameInput.text);
-        }
+        LoadProfile(profilesDropdown.options[profilesDropdown.value].text);
     }
 
     private void OnApplicationQuit()
@@ -615,7 +617,7 @@ public class UIManager : MonoBehaviour
     private void UpdateAllColors()
     {
         UpdateScrollviewChildrenColors(pomodorosScrollViewer);
-        UpdateScrollviewChildrenColors(profilesScrollViewer);
+        //UpdateScrollviewChildrenColors(profilesScrollViewer);
         UpdateThemableButtonsColors();
     }
 
