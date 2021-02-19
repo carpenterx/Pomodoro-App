@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
     public GameObject appHolder;
     public AudioMixer audioMixer;
     public Slider volumeSlider;
+    public Text volumeValue;
 
     public Text profileNameText;
 
@@ -107,6 +108,7 @@ public class UIManager : MonoBehaviour
     {
         //This calculates the volume properly since it does not scale in a linear fashion
         audioMixer.SetFloat("masterVolume", Mathf.Log10(volume) * 20);
+        volumeValue.text = Math.Round(volume * 100).ToString();
     }
 
     private void GenerateSoundsListFromPomodoros()
