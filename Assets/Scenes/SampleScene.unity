@@ -3997,6 +3997,7 @@ MonoBehaviour:
   PomodoroNameText: {fileID: 907138097}
   profileNameInput: {fileID: 1323944734}
   pomNameInput: {fileID: 1860892119}
+  pomMinutesInput: {fileID: 545759093}
   pomSecondsInput: {fileID: 245551943}
   profilePrefab: {fileID: 8982545649816616688, guid: ace3af544c59c6144a28644fae363b03,
     type: 3}
