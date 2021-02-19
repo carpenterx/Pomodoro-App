@@ -6,6 +6,7 @@ using SFB;
 public class BackgroundImage : MonoBehaviour
 {
     public Image image;
+    public Image previewImage;
 
     public void BrowseToBackGround()
     {
@@ -28,7 +29,10 @@ public class BackgroundImage : MonoBehaviour
             Sprite mySprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
             image.color = Color.white;
             image.sprite = mySprite;
-            image.type = Image.Type.Tiled;
+            //image.type = Image.Type.Tiled;
+            previewImage.color = Color.white;
+            previewImage.sprite = mySprite;
+            previewImage.preserveAspect = true;
             //image.type = Image.Type.Simple;
             ProfileData.Current.BackgroundImagePath = imagePath;
         }
@@ -42,6 +46,8 @@ public class BackgroundImage : MonoBehaviour
     {
         image.sprite = null;
         image.color = new Color(13f / 255f, 17f / 255f, 23f / 255f);
+        previewImage.sprite = null;
+        previewImage.color = new Color(13f / 255f, 17f / 255f, 23f / 255f);
         ProfileData.Current.BackgroundImagePath = "";
     }
 }
