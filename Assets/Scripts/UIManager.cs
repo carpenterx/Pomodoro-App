@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI PomodoroNameText;
     public InputField profileNameInput;
     public InputField pomNameInput;
+    public InputField pomMinutesInput;
     public InputField pomSecondsInput;
     public Button profilePrefab;
     public Button pomodoroPrefab;
@@ -352,7 +353,10 @@ public class UIManager : MonoBehaviour
     {
         ProfileData.SetSelectedPomodoro(index);
         pomNameInput.text = ProfileData.Current.Pomodoros[index].Name;
-        pomSecondsInput.text = ProfileData.Current.Pomodoros[index].Duration.ToString();
+        int minutes = ProfileData.Current.Pomodoros[index].Duration / 60;
+        int seconds = ProfileData.Current.Pomodoros[index].Duration % 60;
+        pomMinutesInput.text = minutes.ToString();
+        pomSecondsInput.text = seconds.ToString();
         int soundIndex = audioClips.FindIndex(c => c!= null && c.name == Path.GetFileNameWithoutExtension(ProfileData.Current.Pomodoros[index].SoundPath));
         soundsDropdown.value = soundIndex;
     }
@@ -367,7 +371,8 @@ public class UIManager : MonoBehaviour
 
     public void AddPomodoroToList()
     {
-        ProfileData.Current.Pomodoros.Add(new Pomodoro(pomNameInput.text, pomSecondsInput.text, soundPathsList[soundsDropdown.value]));
+        int totalDuration = GetTotalDuration();
+        ProfileData.Current.Pomodoros.Add(new Pomodoro(pomNameInput.text, totalDuration, soundPathsList[soundsDropdown.value]));
 
         int pomodoroInd = ProfileData.Current.Pomodoros.Count - 1;
         CreatePomodoroPrefab(pomodoroInd);
@@ -379,7 +384,8 @@ public class UIManager : MonoBehaviour
         int selectedIndex = ProfileData.SelectedPomodoroIndex;
         if (selectedIndex != -1)
         {
-            ProfileData.Current.Pomodoros[selectedIndex] = new Pomodoro(pomNameInput.text, pomSecondsInput.text, soundPathsList[soundsDropdown.value]);
+            int totalDuration = GetTotalDuration();
+            ProfileData.Current.Pomodoros[selectedIndex] = new Pomodoro(pomNameInput.text, totalDuration, soundPathsList[soundsDropdown.value]);
             UpdatePomodoroPrefabText(selectedIndex);
             if(selectedIndex == ProfileData.Current.PomodoroPlayIndex)
             {
@@ -387,6 +393,15 @@ public class UIManager : MonoBehaviour
                 timeKeeper.ResetCurrentTime();
             }
         }
+    }
+
+    private int GetTotalDuration()
+    {
+        int minutes = 0;
+        int.TryParse(pomMinutesInput.text, out minutes);
+        int seconds = 0;
+        int.TryParse(pomSecondsInput.text, out seconds);
+        return minutes * 60 + seconds;
     }
 
     public void RemovePomodoroFromList()
