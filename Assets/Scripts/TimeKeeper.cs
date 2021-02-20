@@ -13,11 +13,6 @@ public class TimeKeeper : MonoBehaviour
     private IEnumerator timerCoroutine;
 
     private Pomodoro currentPomodoro;
-    
-    private void Start()
-    {
-        DisplayTime(timerSeconds);
-    }
 
     public void ToggleTimer()
     {
@@ -40,6 +35,7 @@ public class TimeKeeper : MonoBehaviour
         //timerSeconds = ProfileData.Current.Pomodoros[0].Duration;
         currentPomodoro = ProfileData.Current.Pomodoros[ProfileData.Current.PomodoroPlayIndex];
         timerSeconds = currentPomodoro.Duration;
+        DisplayTime(timerSeconds);
         settingsManager.DisplayCurrentPomodoroName(currentPomodoro.Name);
     }
 
