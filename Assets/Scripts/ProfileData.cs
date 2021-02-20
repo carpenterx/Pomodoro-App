@@ -34,6 +34,7 @@ public class ProfileData
     public static int SelectedPomodoroIndex = -1;
     public List<Pomodoro> Pomodoros;
     public string BackgroundImagePath;
+    public string Volume = "1";
 
     public ProfileData()
     {

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.Audio;
+using System.Globalization;
 
 public class UIManager : MonoBehaviour
 {
@@ -49,15 +50,18 @@ public class UIManager : MonoBehaviour
         settingsHolder.SetActive(false);
         // gets the master volume and aligns it to the volume slider
         // in theory, it should reverse the formula used for the volume scaling
-        float volumeValue;
+        /*float volumeValue;
         audioMixer.GetFloat("masterVolume", out volumeValue);
-        volumeSlider.value = Mathf.Pow(10f, volumeValue / 20);
+        volumeSlider.value = Mathf.Pow(10f, volumeValue / 20);*/
 
         audioSource = gameObject.GetComponent<AudioSource>();
 
 
         timeKeeper = gameObject.GetComponent<TimeKeeper>();
+    }
 
+    private void Start()
+    {
         LoadDefaultProfile();
     }
 
@@ -111,7 +115,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetVolume(float volume)
+    public void UpdateVolume(float volume)
+    {
+        ProfileData.Current.Volume = volume.ToString(CultureInfo.InvariantCulture.NumberFormat);
+        SetVolume(volume);
+    }
+
+    private void SetVolume(float volume)
     {
         //This calculates the volume properly since it does not scale in a linear fashion
         audioMixer.SetFloat("masterVolume", Mathf.Log10(volume) * 20);
@@ -530,6 +540,7 @@ public class UIManager : MonoBehaviour
         {
             ProfileData.Current = loadedData;
             ProfileData.ChangeFileName(name);
+            volumeSlider.value = float.Parse(ProfileData.Current.Volume, CultureInfo.InvariantCulture.NumberFormat);
             profileNameText.text = String.Format("Profile: {0}", name);
             AddDefaultPomodoroFallback();
             timeKeeper.LoadCurrentPomodoro();
@@ -550,22 +561,26 @@ public class UIManager : MonoBehaviour
         if(loadedData != null)
         {
             ProfileData.Current = loadedData;
+            
             AddDefaultPomodoroFallback();
         }
         else
         {
             ProfileData.Current.ButtonNormalColor = "#16A085";
             ProfileData.Current.ButtonHighlightedColor = "#1ABC9C";
-            
+            ProfileData.Current.Volume = "1";
+
             AddDefaultPomodoroFallback();
 
             JsonIO.Save(ProfileData.Current);
         }
 
+        volumeSlider.value = float.Parse(ProfileData.Current.Volume, CultureInfo.InvariantCulture.NumberFormat);
+
         profileNameText.text = String.Format("Profile: {0}", ProfileData.DefaultFileName);
         timeKeeper.LoadCurrentPomodoro();
         LoadProfileColors();
-
+        
         GenerateProfilesDisplay(ProfileData.DefaultFileName);
         GeneratePomodorosDisplay();
         InitializeSoundsList();
