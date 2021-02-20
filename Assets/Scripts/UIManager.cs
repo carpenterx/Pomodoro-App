@@ -411,7 +411,7 @@ public class UIManager : MonoBehaviour
         int.TryParse(pomMinutesInput.text, out minutes);
         int seconds = 0;
         int.TryParse(pomSecondsInput.text, out seconds);
-        return minutes * 60 + seconds;
+        return Math.Abs(minutes) * 60 + Math.Abs(seconds);
     }
 
     public void RemovePomodoroFromList()

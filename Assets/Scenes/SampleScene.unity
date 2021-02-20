@@ -4044,6 +4044,7 @@ GameObject:
   - component: {fileID: 545759095}
   - component: {fileID: 545759094}
   - component: {fileID: 545759093}
+  - component: {fileID: 545759096}
   m_Layer: 5
   m_Name: PomodoroMinutesInput
   m_TagString: Untagged
@@ -4173,6 +4174,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545759091}
   m_CullTransparentMesh: 0
+--- !u!114 &545759096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545759091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263155b7bcc81054eb61a7d6f751b8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &600027090
 GameObject:
   m_ObjectHideFlags: 0
@@ -10595,7 +10608,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1006308334}
   m_HandleRect: {fileID: 1233041307}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.00001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -10603,7 +10616,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 519420035}
-        m_MethodName: SetVolume
+        m_MethodName: UpdateVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
