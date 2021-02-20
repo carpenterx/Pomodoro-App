@@ -533,6 +533,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void LoadProfileFromName()
+    {
+        LoadProfile(profilesDropdown.options[profilesDropdown.value].text);
+    }
+
     private void LoadProfile(string name)
     {
         ProfileData loadedData = (ProfileData)JsonIO.Load(name);
@@ -586,11 +591,6 @@ public class UIManager : MonoBehaviour
         InitializeSoundsList();
         GenerateSoundsListFromPomodoros();
         backgroundImage.ChangeBackgroundImage(ProfileData.Current.BackgroundImagePath);
-    }
-
-    public void LoadProfileFromName()
-    {
-        LoadProfile(profilesDropdown.options[profilesDropdown.value].text);
     }
 
     private void OnApplicationQuit()
