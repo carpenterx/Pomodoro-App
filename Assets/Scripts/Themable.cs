@@ -6,16 +6,22 @@ using UnityEngine.UI;
 
 public class Themable : MonoBehaviour
 {
-    public string label;
-    //public ThemeColors themeColors;
-    private Color normalColor;
-    private Color highlightedColor;
+    //public string label;
+    
     public Image borderImage;
-    public Text text;
+    //public Text text;
+
+    //public ThemeColors themeColors;
+    private Color normalColor = Color.blue;
+    private Color highlightedColor = Color.green;
 
     void Start()
     {
-        text.text = label;
+        /*if(text.text != label)
+        {
+            text.text = label;
+        }*/
+        
         SetBorderColor(normalColor);
 
         EventTrigger mouseOverTrigger = GetComponent<EventTrigger>();
