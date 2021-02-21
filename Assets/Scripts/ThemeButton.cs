@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ThemeButton : MonoBehaviour
 {
-    public UIManager uiManager;
+    //public UIManager uiManager;
     public Image normalColorImage;
     public Image highlightColorImage;
 
@@ -16,15 +16,15 @@ public class ThemeButton : MonoBehaviour
         normalColorImage.color = themeColors.normalColor;
         highlightColorImage.color = themeColors.highlightedColor;
 
-        EventTrigger trigger = GetComponent<EventTrigger>();
+        /*EventTrigger trigger = GetComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
         entry.callback.AddListener((data) => { OnPointerClickDelegate((PointerEventData)data); });
-        trigger.triggers.Add(entry);
+        trigger.triggers.Add(entry);*/
     }
 
-    public void OnPointerClickDelegate(PointerEventData data)
+    /*public void OnPointerClickDelegate(PointerEventData data)
     {
         uiManager.SetColor(themeColors);
-    }
+    }*/
 }

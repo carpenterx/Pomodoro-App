@@ -13,6 +13,7 @@ using System.Globalization;
 
 public class UIManager : MonoBehaviour
 {
+    public ThemeManager themeManager;
     public TextMeshProUGUI PomodoroNameText;
     public InputField profileNameInput;
     public InputField pomNameInput;
@@ -21,7 +22,7 @@ public class UIManager : MonoBehaviour
     public Button profilePrefab;
     public Button pomodoroPrefab;
     public ScrollRect pomodorosScrollViewer;
-    public List<Button> themableButtonsList;
+    //public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
     public Dropdown profilesDropdown;
     public BackgroundImage backgroundImage;
@@ -29,8 +30,6 @@ public class UIManager : MonoBehaviour
     private List<AudioClip> audioClips = new List<AudioClip>();
 
     private List<string> audioClipNames = new List<string>();
-
-    private ColorBlock currentColors;
 
     private TimeKeeper timeKeeper;
     public GameObject settingsHolder;
@@ -317,14 +316,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void UpdateScrollviewChildrenColors(ScrollRect parent)
-    {
-        Button[] buttons = parent.content.GetComponentsInChildren<Button>();
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].colors = currentColors;
-        }
-    }
+    
 
     public void GeneratePomodorosDisplay()
     {
@@ -341,7 +333,7 @@ public class UIManager : MonoBehaviour
     private void CreatePomodoroPrefab(int index)
     {
         Button button = Instantiate(pomodoroPrefab);
-        button.colors = currentColors;
+        button.colors = themeManager.currentColors;
         button.transform.SetParent(pomodorosScrollViewer.content.transform, false);
         button.GetComponent<Button>().onClick.AddListener(delegate { SelectPomodoro(index); });
         Text[] textBoxes = button.GetComponentsInChildren<Text>();
@@ -549,7 +541,7 @@ public class UIManager : MonoBehaviour
             profileNameText.text = String.Format("Profile: {0}", name);
             AddDefaultPomodoroFallback();
             timeKeeper.LoadCurrentPomodoro();
-            LoadProfileColors();
+            themeManager.LoadProfileColors();
 
             GenerateProfilesDisplay(ProfileData.FileName);
             GeneratePomodorosDisplay();
@@ -584,7 +576,7 @@ public class UIManager : MonoBehaviour
 
         profileNameText.text = String.Format("Profile: {0}", ProfileData.DefaultFileName);
         timeKeeper.LoadCurrentPomodoro();
-        LoadProfileColors();
+        themeManager.LoadProfileColors();
         
         GenerateProfilesDisplay(ProfileData.DefaultFileName);
         GeneratePomodorosDisplay();
@@ -598,66 +590,5 @@ public class UIManager : MonoBehaviour
         // the data gets saved to the last filepath, so I need to reset it to default first before autosaving
         ProfileData.ChangeFileName(ProfileData.DefaultFileName);
         JsonIO.Save(ProfileData.Current);
-    }
-
-    private Color GetColorFromHexString(string hexString)
-    {
-        Color color;
-        ColorUtility.TryParseHtmlString(hexString, out color);
-        return color;
-    }
-
-    public void LoadProfileColors()
-    {
-        ChangeCurrentColor(ProfileData.Current.ButtonNormalColor, ProfileData.Current.ButtonHighlightedColor);
-    }
-
-    public void SetColor(ThemeColors themeColors)
-    {
-        ProfileData.Current.ButtonNormalColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.normalColor);
-        ProfileData.Current.ButtonHighlightedColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.highlightedColor);
-        ChangeCurrentColor(themeColors);
-    }
-
-    private void ChangeCurrentColor(string normalColor, string highlightedColor)
-    {
-        currentColors = BuildColorBlock(normalColor, highlightedColor);
-        UpdateAllColors();
-    }
-
-    private void ChangeCurrentColor(ThemeColors themeColors)
-    {
-        currentColors = BuildColorBlock(themeColors);
-        UpdateAllColors();
-    }
-
-    private void UpdateThemableButtonsColors()
-    {
-        foreach (Button button in themableButtonsList)
-        {
-            button.colors = currentColors;
-        }
-    }
-
-    private void UpdateAllColors()
-    {
-        UpdateScrollviewChildrenColors(pomodorosScrollViewer);
-        UpdateThemableButtonsColors();
-    }
-
-    private ColorBlock BuildColorBlock(string normalColor, string highlightedColor)
-    {
-        ColorBlock colorBlock = ColorBlock.defaultColorBlock;
-        colorBlock.normalColor = GetColorFromHexString(normalColor);
-        colorBlock.highlightedColor = GetColorFromHexString(highlightedColor);
-        return colorBlock;
-    }
-
-    private ColorBlock BuildColorBlock(ThemeColors themeColors)
-    {
-        ColorBlock colorBlock = ColorBlock.defaultColorBlock;
-        colorBlock.normalColor = themeColors.normalColor;
-        colorBlock.highlightedColor = themeColors.highlightedColor;
-        return colorBlock;
     }
 }
