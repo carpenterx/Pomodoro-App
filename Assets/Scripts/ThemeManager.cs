@@ -14,7 +14,7 @@ public class ThemeManager : MonoBehaviour
     [Space]
     public List<ThemeButton> themeButtons;
 
-    public ColorBlock currentColors;
+    public static ColorBlock currentColors;
 
     void Start()
     {

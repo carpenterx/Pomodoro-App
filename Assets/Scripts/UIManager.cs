@@ -333,7 +333,7 @@ public class UIManager : MonoBehaviour
     private void CreatePomodoroPrefab(int index)
     {
         Button button = Instantiate(pomodoroPrefab);
-        button.colors = themeManager.currentColors;
+        button.colors = ThemeManager.currentColors;
         button.transform.SetParent(pomodorosScrollViewer.content.transform, false);
         button.GetComponent<Button>().onClick.AddListener(delegate { SelectPomodoro(index); });
         Text[] textBoxes = button.GetComponentsInChildren<Text>();
