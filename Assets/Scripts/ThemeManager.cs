@@ -6,13 +6,10 @@ using UnityEngine.UI;
 
 public class ThemeManager : MonoBehaviour
 {
-    //public UIManager uiManager;
-
-    [Space]
     public List<Button> themableButtonsList;
 
     [Space]
-    public ScrollRect pomodorosScrollViewer;
+    public List<ScrollRect> themableScrollViewsList;
 
     [Space]
     public List<ThemeButton> themeButtons;
@@ -67,6 +64,12 @@ public class ThemeManager : MonoBehaviour
         UpdateAllColors();
     }
 
+    private void UpdateAllColors()
+    {
+        UpdateThemableButtonsColors();
+        UpdateThemableScrollViewsColors();
+    }
+
     private void UpdateThemableButtonsColors()
     {
         foreach (Button button in themableButtonsList)
@@ -75,10 +78,12 @@ public class ThemeManager : MonoBehaviour
         }
     }
 
-    private void UpdateAllColors()
+    private void UpdateThemableScrollViewsColors()
     {
-        UpdateScrollviewChildrenColors(pomodorosScrollViewer);
-        UpdateThemableButtonsColors();
+        foreach (ScrollRect scrollRect in themableScrollViewsList)
+        {
+            UpdateScrollviewChildrenColors(scrollRect);
+        }
     }
 
     private void UpdateScrollviewChildrenColors(ScrollRect parent)
