@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class ThemeManager : MonoBehaviour
 {
-    public List<Button> themableButtonsList;
+    //public List<Button> themableButtonsList;
+
+    public List<ScrollRect> themableScrollViewsList;
 
     [Space]
-    public List<ScrollRect> themableScrollViewsList;
+    public List<ThemableSlider> themableSlidersList;
 
     [Space]
     public List<ThemeButton> themeButtons;
@@ -74,16 +76,25 @@ public class ThemeManager : MonoBehaviour
 
     private void UpdateAllColors()
     {
-        UpdateThemableButtonsColors();
+        //UpdateThemableButtonsColors();
+        UpdateThemableSlidersColors();
         UpdateThemablesColors();
         UpdateThemableScrollViewsColors();
     }
 
-    private void UpdateThemableButtonsColors()
+    /*private void UpdateThemableButtonsColors()
     {
         foreach (Button button in themableButtonsList)
         {
             button.colors = currentColors;
+        }
+    }*/
+
+    private void UpdateThemableSlidersColors()
+    {
+        foreach (ThemableSlider slider in themableSlidersList)
+        {
+            slider.ChangeColors(currentColors);
         }
     }
 

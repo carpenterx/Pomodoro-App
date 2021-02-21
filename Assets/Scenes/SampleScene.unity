@@ -4497,26 +4497,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fe9a7c85eef7d4c879c261a30373a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  themableButtonsList:
-  - {fileID: 815102141}
-  - {fileID: 1870720620}
-  - {fileID: 783660356}
-  - {fileID: 687249831}
-  - {fileID: 1047355800}
-  - {fileID: 126640672}
-  - {fileID: 2059383848}
-  - {fileID: 1909359361}
-  - {fileID: 1070408574}
-  - {fileID: 1881096862}
-  - {fileID: 2062214543}
-  - {fileID: 1813372550}
-  - {fileID: 1069069145}
-  - {fileID: 1101459351}
-  - {fileID: 232247763}
-  - {fileID: 2129234978}
-  - {fileID: 960517962}
   themableScrollViewsList:
   - {fileID: 1223561658}
+  themableSlidersList:
+  - {fileID: 1408720359}
   themeButtons:
   - {fileID: 821395119}
   - {fileID: 1769002864}
@@ -7915,7 +7899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20572266, g: 0.6509434, b: 0.5041085, a: 0.9411765}
+  m_Color: {r: 0.101960786, g: 0.7372549, b: 0.6117647, a: 0.9411765}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10203,7 +10187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09380562, g: 0.5690618, b: 0.6415094, a: 1}
+  m_Color: {r: 0.08627451, g: 0.627451, b: 0.52156866, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -12091,6 +12075,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1408720357}
   - component: {fileID: 1408720358}
+  - component: {fileID: 1408720359}
   m_Layer: 5
   m_Name: Volume Slider
   m_TagString: Untagged
@@ -12181,6 +12166,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1408720359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408720356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77aa68cd2fa66b342a5d58e585b574ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillImage: {fileID: 1006308335}
+  handleImage: {fileID: 1233041308}
 --- !u!1 &1410870368
 GameObject:
   m_ObjectHideFlags: 0
