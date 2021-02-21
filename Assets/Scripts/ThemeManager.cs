@@ -47,9 +47,14 @@ public class ThemeManager : MonoBehaviour
 
     public void SetColor(ThemeColors themeColors)
     {
-        ProfileData.Current.ButtonNormalColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.normalColor);
-        ProfileData.Current.ButtonHighlightedColor = "#" + ColorUtility.ToHtmlStringRGB(themeColors.highlightedColor);
+        ProfileData.Current.ButtonNormalColor = GenerateColorString(themeColors.normalColor);
+        ProfileData.Current.ButtonHighlightedColor = GenerateColorString(themeColors.highlightedColor);
         ChangeCurrentColor(themeColors);
+    }
+
+    private string GenerateColorString(Color color)
+    {
+        return "#" + ColorUtility.ToHtmlStringRGB(color);
     }
 
     private void ChangeCurrentColor(string normalColor, string highlightedColor)
