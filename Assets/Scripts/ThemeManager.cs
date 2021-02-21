@@ -13,6 +13,9 @@ public class ThemeManager : MonoBehaviour
 
     [Space]
     public List<ThemeButton> themeButtons;
+    
+    [Space]
+    public List<Themable> themablesList;
 
     public static ColorBlock currentColors;
 
@@ -72,6 +75,7 @@ public class ThemeManager : MonoBehaviour
     private void UpdateAllColors()
     {
         UpdateThemableButtonsColors();
+        UpdateThemablesColors();
         UpdateThemableScrollViewsColors();
     }
 
@@ -80,6 +84,14 @@ public class ThemeManager : MonoBehaviour
         foreach (Button button in themableButtonsList)
         {
             button.colors = currentColors;
+        }
+    }
+
+    private void UpdateThemablesColors()
+    {
+        foreach (Themable themable in themablesList)
+        {
+            themable.ChangeColors(currentColors);
         }
     }
 
