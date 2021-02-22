@@ -24,7 +24,7 @@ public class ProfileData
 
     public static string FolderName = Application.persistentDataPath + "/profiles";
     public static string FileName = "";
-    public static string DefaultFileName = "default";
+    public static string DefaultFileName = "[autosave]";
     public static string FileExtension = ".pro";
     public static string SavePath = "";
 
