@@ -541,11 +541,20 @@ public class UIManager : MonoBehaviour
         {
             if (profilesDropdown.options[profilesDropdown.value].text != ProfileData.DefaultFileName)
             {
-                profilesDropdown.options.RemoveAt(profilesDropdown.value);
-                profilesDropdown.value = 0;
-                profilesDropdown.RefreshShownValue();
-                ProfileData.ChangeFileName(profilesDropdown.options[profilesDropdown.value].text);
-                File.Delete(ProfileData.SavePath);
+                try
+                {
+                    ProfileData.ChangeFileName(profilesDropdown.options[profilesDropdown.value].text);
+                    File.Delete(ProfileData.SavePath);
+                    profilesDropdown.options.RemoveAt(profilesDropdown.value);
+                    profilesDropdown.value = 0;
+                    profilesDropdown.RefreshShownValue();
+                }
+                catch (Exception exception)
+                {
+
+                    Debug.LogError(exception.Message);
+                }
+                
             }
         }
     }
