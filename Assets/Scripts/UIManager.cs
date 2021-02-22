@@ -636,4 +636,9 @@ public class UIManager : MonoBehaviour
         ProfileData.ChangeFileName(ProfileData.DefaultFileName);
         JsonIO.Save(ProfileData.Current);
     }
+
+    public void CloseApplication()
+    {
+        Application.Quit();
+    }
 }
