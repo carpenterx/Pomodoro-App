@@ -519,7 +519,7 @@ public class UIManager : MonoBehaviour
     {
         if(profilesDropdown.options.Count > 0)
         {
-            ProfileData.ChangeFileName(soundsDropdown.options[soundsDropdown.value].text);
+            ProfileData.ChangeFileName(profilesDropdown.options[profilesDropdown.value].text);
             JsonIO.Save(ProfileData.Current);
             GenerateProfilesDisplay(ProfileData.FileName);
         }
@@ -527,7 +527,7 @@ public class UIManager : MonoBehaviour
 
     public void AddProfile()
     {
-        if (profileNameInput.text != "" && !DropdownContainsValue(soundsDropdown, profileNameInput.text))
+        if (profileNameInput.text != "" && !DropdownContainsValue(profilesDropdown, profileNameInput.text))
         {
             ProfileData.ChangeFileName(profileNameInput.text);
             JsonIO.Save(ProfileData.Current);
@@ -537,9 +537,16 @@ public class UIManager : MonoBehaviour
 
     public void DeleteProfile()
     {
-        if(soundsDropdown.options[soundsDropdown.value].text != ProfileData.DefaultFileName)
+        if(profilesDropdown.value >= 0 && profilesDropdown.value < profilesDropdown.options.Count)
         {
-            soundsDropdown.options.RemoveAt(soundsDropdown.value);
+            if (profilesDropdown.options[profilesDropdown.value].text != ProfileData.DefaultFileName)
+            {
+                profilesDropdown.options.RemoveAt(profilesDropdown.value);
+                profilesDropdown.value = 0;
+                profilesDropdown.RefreshShownValue();
+                ProfileData.ChangeFileName(profilesDropdown.options[profilesDropdown.value].text);
+                File.Delete(ProfileData.SavePath);
+            }
         }
     }
 
