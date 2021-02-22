@@ -535,6 +535,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void DeleteProfile()
+    {
+        if(soundsDropdown.options[soundsDropdown.value].text != ProfileData.DefaultFileName)
+        {
+            soundsDropdown.options.RemoveAt(soundsDropdown.value);
+        }
+    }
+
     private bool DropdownContainsValue(Dropdown dropdown,string value)
     {
         for (int i = 0; i < dropdown.options.Count; i++)
