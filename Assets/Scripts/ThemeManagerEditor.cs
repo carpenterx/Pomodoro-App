@@ -27,8 +27,12 @@ public class ThemeManagerEditor : Editor
         Object[] objects = Resources.FindObjectsOfTypeAll(typeof(Themable));
         foreach (Themable themable in objects)
         {
-            themeManager.themablesList.Add(themable);
+            if (themable != null && !EditorUtility.IsPersistent(themable.transform.root.gameObject) && !(themable.hideFlags == HideFlags.NotEditable || themable.hideFlags == HideFlags.HideAndDontSave))
+            {
+                themeManager.themablesList.Add(themable);
+            }
         }
+        AssetDatabase.Refresh();
     }
 }
 #endif

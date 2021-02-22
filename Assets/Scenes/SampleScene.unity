@@ -4274,28 +4274,26 @@ MonoBehaviour:
   - {fileID: 1554984229}
   - {fileID: 1160892551}
   themablesList:
-  - {fileID: 2109073191}
-  - {fileID: 1256079146}
-  - {fileID: 352604829}
+  - {fileID: 538187620}
   - {fileID: 173621725}
   - {fileID: 243597168}
   - {fileID: 250924917}
   - {fileID: 272632087}
   - {fileID: 291145284}
   - {fileID: 301296292}
+  - {fileID: 352604829}
   - {fileID: 490889419}
-  - {fileID: 0}
   - {fileID: 888911702}
   - {fileID: 924059258}
   - {fileID: 1061944526}
   - {fileID: 1157234970}
   - {fileID: 1178800840}
+  - {fileID: 1256079146}
   - {fileID: 1476388091}
   - {fileID: 1751025073}
   - {fileID: 1895195381}
   - {fileID: 1953452823}
-  - {fileID: 3451236120878650898, guid: 0af7822cd8daa1d488e756d1ae0f3c51, type: 3}
-  - {fileID: 650365314216362529, guid: 37da71fb38a987d4da166cc71658836b, type: 3}
+  - {fileID: 2109073191}
 --- !u!1001 &538187618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4457,6 +4455,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 538187618}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &538187620 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 650365314216362529, guid: 37da71fb38a987d4da166cc71658836b,
+    type: 3}
+  m_PrefabInstance: {fileID: 538187618}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c18332a8201c1458395b1e83f6daf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &545759091
 GameObject:
   m_ObjectHideFlags: 0
