@@ -554,7 +554,6 @@ public class UIManager : MonoBehaviour
 
                     Debug.LogError(exception.Message);
                 }
-                
             }
         }
     }
