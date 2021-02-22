@@ -4154,7 +4154,7 @@ PrefabInstance:
     - target: {fileID: 3451236120878650897, guid: 0af7822cd8daa1d488e756d1ae0f3c51,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadProfileFromName
+      value: SaveProfile
       objectReference: {fileID: 0}
     - target: {fileID: 3451236120878650897, guid: 0af7822cd8daa1d488e756d1ae0f3c51,
         type: 3}
@@ -17318,7 +17318,7 @@ PrefabInstance:
     - target: {fileID: 3451236120878650897, guid: 0af7822cd8daa1d488e756d1ae0f3c51,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SaveProfile
+      value: AddProfile
       objectReference: {fileID: 0}
     - target: {fileID: 3451236120878650897, guid: 0af7822cd8daa1d488e756d1ae0f3c51,
         type: 3}

@@ -517,12 +517,34 @@ public class UIManager : MonoBehaviour
 
     public void SaveProfile()
     {
-        if(profileNameInput.text != "")
+        if(profilesDropdown.options.Count > 0)
+        {
+            ProfileData.ChangeFileName(soundsDropdown.options[soundsDropdown.value].text);
+            JsonIO.Save(ProfileData.Current);
+            GenerateProfilesDisplay(ProfileData.FileName);
+        }
+    }
+
+    public void AddProfile()
+    {
+        if (profileNameInput.text != "" && !DropdownContainsValue(soundsDropdown, profileNameInput.text))
         {
             ProfileData.ChangeFileName(profileNameInput.text);
             JsonIO.Save(ProfileData.Current);
             GenerateProfilesDisplay(ProfileData.FileName);
         }
+    }
+
+    private bool DropdownContainsValue(Dropdown dropdown,string value)
+    {
+        for (int i = 0; i < dropdown.options.Count; i++)
+        {
+            if(dropdown.options[i].text == value)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void LoadProfileFromName()
