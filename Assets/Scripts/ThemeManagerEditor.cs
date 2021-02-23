@@ -7,8 +7,6 @@ public class ThemeManagerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        //ThemeManager themeManager = (ThemeManager)target;
-
         DrawDefaultInspector();
 
         GUILayout.Space(20);

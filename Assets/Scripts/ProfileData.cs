@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class ProfileData
 {
-    private static ProfileData _current;
+    /*private static ProfileData _current;
     public static ProfileData Current
     {
         get
@@ -20,13 +19,13 @@ public class ProfileData
         {
             _current = value;
         }
-    }
+    }*/
 
-    public static string FolderName = Application.persistentDataPath + "/profiles";
+    /*public static string FolderName = Application.persistentDataPath + "/profiles";
     public static string FileName = "";
     public static string DefaultFileName = "[autosave]";
     public static string FileExtension = ".pro";
-    public static string SavePath = "";
+    public static string SavePath = "";*/
 
     public string ButtonNormalColor;
     public string ButtonHighlightedColor;
@@ -38,12 +37,12 @@ public class ProfileData
 
     public ProfileData()
     {
-        FileName = DefaultFileName;
+        //FileName = DefaultFileName;
         Pomodoros = new List<Pomodoro>();
-        SavePath = BuildSavePath();
+        //SavePath = BuildSavePath();
     }
 
-    public static void ChangeFileName(string fileName)
+    /*public static void ChangeFileName(string fileName)
     {
         FileName = fileName;
         SavePath = BuildSavePath();
@@ -52,14 +51,14 @@ public class ProfileData
     private static string BuildSavePath()
     {
         return FolderName + "/" + FileName + FileExtension;
-    }
+    }*/
 
-    public static void SetSelectedPomodoro(int index)
+    public void SetSelectedPomodoro(int index)
     {
         SelectedPomodoroIndex = index;
     }
 
-    public static void ResetSelectedPomodoro()
+    public void ResetSelectedPomodoro()
     {
         SelectedPomodoroIndex = -1;
     }

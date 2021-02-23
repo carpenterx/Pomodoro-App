@@ -18,7 +18,7 @@ public class BackgroundImage : MonoBehaviour
         }
     }
 
-    public void ChangeBackgroundImage(string imagePath)
+    public bool ChangeBackgroundImage(string imagePath)
     {
         if(File.Exists(imagePath))
         {
@@ -34,11 +34,13 @@ public class BackgroundImage : MonoBehaviour
             previewImage.sprite = mySprite;
             previewImage.preserveAspect = true;
             //image.type = Image.Type.Simple;
-            ProfileData.Current.BackgroundImagePath = imagePath;
+            //ProfileData.Current.BackgroundImagePath = imagePath;
+            return true;
         }
         else
         {
-            RemoveBackgroundImage();
+            //RemoveBackgroundImage();
+            return false;
         }
     }
 
@@ -48,6 +50,6 @@ public class BackgroundImage : MonoBehaviour
         image.color = new Color(13f / 255f, 17f / 255f, 23f / 255f);
         previewImage.sprite = null;
         previewImage.color = new Color(13f / 255f, 17f / 255f, 23f / 255f);
-        ProfileData.Current.BackgroundImagePath = "";
+        //ProfileData.Current.BackgroundImagePath = "";
     }
 }

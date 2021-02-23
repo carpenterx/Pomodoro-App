@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ThemeManager : MonoBehaviour
 {
-    //public List<Button> themableButtonsList;
+    public CurrentProfile currentProfile;
 
     public List<ScrollRect> themableScrollViewsList;
 
@@ -47,13 +47,13 @@ public class ThemeManager : MonoBehaviour
 
     public void LoadProfileColors()
     {
-        ChangeCurrentColor(ProfileData.Current.ButtonNormalColor, ProfileData.Current.ButtonHighlightedColor);
+        ChangeCurrentColor(currentProfile.profileData.ButtonNormalColor, currentProfile.profileData.ButtonHighlightedColor);
     }
 
     public void SetColor(ThemeColors themeColors)
     {
-        ProfileData.Current.ButtonNormalColor = GenerateColorString(themeColors.normalColor);
-        ProfileData.Current.ButtonHighlightedColor = GenerateColorString(themeColors.highlightedColor);
+        currentProfile.profileData.ButtonNormalColor = GenerateColorString(themeColors.normalColor);
+        currentProfile.profileData.ButtonHighlightedColor = GenerateColorString(themeColors.highlightedColor);
         ChangeCurrentColor(themeColors);
     }
 

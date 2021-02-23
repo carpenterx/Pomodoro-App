@@ -4230,6 +4230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   themeManager: {fileID: 519420036}
+  currentProfile: {fileID: 11400000, guid: 07b6814386b861640ac73c77ba877a40, type: 2}
   PomodoroNameText: {fileID: 907138097}
   profileNameInput: {fileID: 1323944734}
   pomNameInput: {fileID: 1860892119}
@@ -4262,6 +4263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fe9a7c85eef7d4c879c261a30373a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentProfile: {fileID: 11400000, guid: 07b6814386b861640ac73c77ba877a40, type: 2}
   themableScrollViewsList:
   - {fileID: 1223561658}
   themableSlidersList:

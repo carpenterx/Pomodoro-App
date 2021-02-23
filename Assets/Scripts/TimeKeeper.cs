@@ -33,7 +33,7 @@ public class TimeKeeper : MonoBehaviour
     public void LoadCurrentPomodoro()
     {
         //timerSeconds = ProfileData.Current.Pomodoros[0].Duration;
-        currentPomodoro = ProfileData.Current.Pomodoros[ProfileData.Current.PomodoroPlayIndex];
+        currentPomodoro = settingsManager.currentProfile.profileData.Pomodoros[settingsManager.currentProfile.profileData.PomodoroPlayIndex];
         timerSeconds = currentPomodoro.Duration;
         DisplayTime(timerSeconds);
         settingsManager.DisplayCurrentPomodoroName(currentPomodoro.Name);
@@ -86,7 +86,7 @@ public class TimeKeeper : MonoBehaviour
 
         //Debug.Log(currentPomodoro.Name);
 
-        currentPomodoro = ProfileData.Current.GetNextPomodoroToPlay();
+        currentPomodoro = settingsManager.currentProfile.profileData.GetNextPomodoroToPlay();
         timerSeconds = currentPomodoro.Duration;
         settingsManager.DisplayCurrentPomodoroName(currentPomodoro.Name);
         timerCoroutine = StartCountdown(timerSeconds);
