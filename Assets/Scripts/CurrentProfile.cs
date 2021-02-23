@@ -7,19 +7,19 @@ using UnityEngine;
 public class CurrentProfile : ScriptableObject
 {
     public string FolderName;
-    public string FileName = "";
-    public string DefaultFileName = "[autosave]";
-    public string FileExtension = ".pro";
-    public string SavePath = "";
+    public string FileName;
+    public string DefaultFileName;
+    public string FileExtension;
+    public string SavePath;
     public ProfileData profileData = new ProfileData();
 
     private void OnEnable()
     {
         FolderName = Application.persistentDataPath + "/profiles";
-        FileName = "";
+        //FileName = "";
         DefaultFileName = "[autosave]";
         FileExtension = ".pro";
-        SavePath = "";
+        SavePath = BuildSavePath();
 }
 
     public void ChangeFileName(string fileName)
@@ -42,6 +42,11 @@ public class CurrentProfile : ScriptableObject
     public ProfileData LoadDefaultProfile()
     {
         return LoadProfile(DefaultFileName);
+    }
+    
+    public ProfileData LoadLastUsedProfile()
+    {
+        return (ProfileData)JsonIO.Load(SavePath);
     }
 
     public void SaveProfile(string profileName)

@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        LoadDefaultProfile();
+        LoadLastUsedProfile();
     }
 
     private void Update()
@@ -629,35 +629,46 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void LoadDefaultProfile()
+    private void LoadLastUsedProfile()
     {
         // if there is no save data, set default values for app data
         //currentProfile.ChangeFileName(currentProfile.DefaultFileName);
         //ProfileData loadedData = (ProfileData)JsonIO.Load(currentProfile.DefaultFileName);
-        ProfileData loadedData = currentProfile.LoadDefaultProfile();
-        if (loadedData != null)
+        ProfileData loadedLastUsedProfile = currentProfile.LoadLastUsedProfile();
+        if(loadedLastUsedProfile != null)
         {
-            currentProfile.profileData = loadedData;
-            
+            currentProfile.profileData = loadedLastUsedProfile;
+
             AddDefaultPomodoroFallback();
             GenerateProfilesDisplay(currentProfile.DefaultFileName);
         }
         else
         {
-            currentProfile.profileData.ButtonNormalColor = "#16A085";
-            currentProfile.profileData.ButtonHighlightedColor = "#1ABC9C";
-            currentProfile.profileData.Volume = "1";
+            ProfileData loadedDefaultProfile = currentProfile.LoadDefaultProfile();
+            if (loadedDefaultProfile != null)
+            {
+                currentProfile.profileData = loadedDefaultProfile;
 
-            AddDefaultPomodoroFallback();
+                AddDefaultPomodoroFallback();
+                GenerateProfilesDisplay(currentProfile.DefaultFileName);
+            }
+            else
+            {
+                currentProfile.profileData.ButtonNormalColor = "#16A085";
+                currentProfile.profileData.ButtonHighlightedColor = "#1ABC9C";
+                currentProfile.profileData.Volume = "1";
 
-            //currentProfile.SaveCurrentProfile();
-            SaveProfileWithName(currentProfile.DefaultFileName);
+                AddDefaultPomodoroFallback();
+
+                //currentProfile.SaveCurrentProfile();
+                SaveProfileWithName(currentProfile.DefaultFileName);
+            }
         }
-
+        
         volumeSlider.value = float.Parse(currentProfile.profileData.Volume, CultureInfo.InvariantCulture.NumberFormat);
 
         //profileNameText.text = String.Format("Profile: {0}", currentProfile.DefaultFileName);
-        UpdateProfileNameLabel(currentProfile.DefaultFileName);
+        UpdateProfileNameLabel(currentProfile.FileName);
         timeKeeper.LoadCurrentPomodoro();
         themeManager.LoadProfileColors();
         
@@ -675,7 +686,13 @@ public class UIManager : MonoBehaviour
         //currentProfile.ChangeFileName(currentProfile.DefaultFileName);
         //JsonIO.Save(currentProfile.profileData);
         //currentProfile.SaveCurrentProfile();
+        string lastProfile = currentProfile.DefaultFileName;
+        if(currentProfile.FileName != currentProfile.DefaultFileName)
+        {
+            lastProfile = currentProfile.FileName;
+        }
         SaveProfileWithName(currentProfile.DefaultFileName);
+        currentProfile.ChangeFileName(lastProfile);
     }
 
     public void CloseApplication()
