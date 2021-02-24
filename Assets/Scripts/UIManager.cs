@@ -23,7 +23,6 @@ public class UIManager : MonoBehaviour
     public Button profilePrefab;
     public Button pomodoroPrefab;
     public ScrollRect pomodorosScrollViewer;
-    //public List<Button> themableButtonsList;
     public Dropdown soundsDropdown;
     public Dropdown profilesDropdown;
     public BackgroundImage backgroundImage;
@@ -48,15 +47,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         settingsHolder.SetActive(false);
-        // gets the master volume and aligns it to the volume slider
-        // in theory, it should reverse the formula used for the volume scaling
-        /*float volumeValue;
-        audioMixer.GetFloat("masterVolume", out volumeValue);
-        volumeSlider.value = Mathf.Pow(10f, volumeValue / 20);*/
-
         audioSource = gameObject.GetComponent<AudioSource>();
-
-
         timeKeeper = gameObject.GetComponent<TimeKeeper>();
     }
 
@@ -151,9 +142,9 @@ public class UIManager : MonoBehaviour
 
     public void SelectPomodoroPlayIndex()
     {
-        if(ProfileData.SelectedPomodoroIndex != -1)
+        if(currentProfile.profileData.SelectedPomodoroIndex != -1)
         {
-            currentProfile.profileData.PomodoroPlayIndex = ProfileData.SelectedPomodoroIndex;
+            currentProfile.profileData.PomodoroPlayIndex = currentProfile.profileData.SelectedPomodoroIndex;
             timeKeeper.LoadCurrentPomodoro();
             timeKeeper.ResetCurrentTime();
             UpdatePomodorosPlayIcon();
@@ -382,7 +373,7 @@ public class UIManager : MonoBehaviour
 
     public void EditPomodoro()
     {
-        int selectedIndex = ProfileData.SelectedPomodoroIndex;
+        int selectedIndex = currentProfile.profileData.SelectedPomodoroIndex;
         if (selectedIndex != -1)
         {
             int totalDuration = GetTotalDuration();
@@ -409,7 +400,7 @@ public class UIManager : MonoBehaviour
     {
         if(currentProfile.profileData.Pomodoros.Count > 1)
         {
-            int index = ProfileData.SelectedPomodoroIndex;
+            int index = currentProfile.profileData.SelectedPomodoroIndex;
             if (index >= 0)
             {
                 currentProfile.profileData.Pomodoros.RemoveAt(index);
@@ -442,7 +433,7 @@ public class UIManager : MonoBehaviour
     public void MovePomodoroUp()
     {
         // there need to be more than 2 pomodoros, a pomodoro needs to be selected, and the selected pomodoro needs to not be the first element
-        int selectedIndex = ProfileData.SelectedPomodoroIndex;
+        int selectedIndex = currentProfile.profileData.SelectedPomodoroIndex;
         if (selectedIndex > 0 && currentProfile.profileData.Pomodoros.Count > 1)
         {
             Pomodoro tempPomodoro = currentProfile.profileData.Pomodoros[selectedIndex];
@@ -459,13 +450,14 @@ public class UIManager : MonoBehaviour
                 currentProfile.profileData.PomodoroPlayIndex = selectedIndex;
             }
             UpdatePomodorosPlayIcon();
+            currentProfile.profileData.SetSelectedPomodoro(currentProfile.profileData.SelectedPomodoroIndex - 1);
         }
     }
 
     public void MovePomodoroDown()
     {
         // there need to be more than 2 pomodoros, a pomodoro needs to be selected, and the selected pomodoro needs to not be the last element
-        int selectedIndex = ProfileData.SelectedPomodoroIndex;
+        int selectedIndex = currentProfile.profileData.SelectedPomodoroIndex;
         int pomoCount = currentProfile.profileData.Pomodoros.Count;
         if (selectedIndex > -1 && selectedIndex < pomoCount - 1 && pomoCount > 1)
         {
@@ -483,6 +475,7 @@ public class UIManager : MonoBehaviour
                 currentProfile.profileData.PomodoroPlayIndex = selectedIndex;
             }
             UpdatePomodorosPlayIcon();
+            currentProfile.profileData.SetSelectedPomodoro(currentProfile.profileData.SelectedPomodoroIndex + 1);
         }
     }
 
@@ -516,12 +509,6 @@ public class UIManager : MonoBehaviour
 
     private void SaveProfileWithName(string name)
     {
-        /*currentProfile.ChangeFileName(name);
-        if (!Directory.Exists(currentProfile.FolderName))
-        {
-            Directory.CreateDirectory(currentProfile.FolderName);
-        }
-        JsonIO.Save(currentProfile.SavePath, currentProfile.profileData);*/
         currentProfile.SaveProfile(name);
         GenerateProfilesDisplay(name);
     }
@@ -538,10 +525,6 @@ public class UIManager : MonoBehaviour
     {
         if (profileNameInput.text != "" && !DropdownContainsValue(profilesDropdown, profileNameInput.text))
         {
-            //currentProfile.ChangeFileName(profileNameInput.text);
-            //JsonIO.Save(currentProfile.profileData);
-            //currentProfile.SaveProfile(profileNameInput.text);
-            //GenerateProfilesDisplay(currentProfile.FileName);
             UpdateProfileNameLabel(profileNameInput.text);
             SaveProfileWithName(profileNameInput.text);
         }
@@ -589,8 +572,6 @@ public class UIManager : MonoBehaviour
 
     private void LoadProfile(string name)
     {
-        //currentProfile.ChangeFileName(name);
-        //ProfileData loadedData = (ProfileData)JsonIO.Load(name);
         ProfileData loadedData = currentProfile.LoadProfile(name);
         if (loadedData != null)
         {
@@ -606,7 +587,6 @@ public class UIManager : MonoBehaviour
             GeneratePomodorosDisplay();
             InitializeSoundsList();
             GenerateSoundsListFromPomodoros();
-            //backgroundImage.ChangeBackgroundImage(currentProfile.profileData.BackgroundImagePath);
             ChangeBackgroundImage(currentProfile.profileData.BackgroundImagePath);
         }
     }
@@ -632,8 +612,6 @@ public class UIManager : MonoBehaviour
     private void LoadLastUsedProfile()
     {
         // if there is no save data, set default values for app data
-        //currentProfile.ChangeFileName(currentProfile.DefaultFileName);
-        //ProfileData loadedData = (ProfileData)JsonIO.Load(currentProfile.DefaultFileName);
         ProfileData loadedLastUsedProfile = currentProfile.LoadLastUsedProfile();
         if(loadedLastUsedProfile != null)
         {
@@ -660,32 +638,25 @@ public class UIManager : MonoBehaviour
 
                 AddDefaultPomodoroFallback();
 
-                //currentProfile.SaveCurrentProfile();
                 SaveProfileWithName(currentProfile.DefaultFileName);
             }
         }
         
         volumeSlider.value = float.Parse(currentProfile.profileData.Volume, CultureInfo.InvariantCulture.NumberFormat);
 
-        //profileNameText.text = String.Format("Profile: {0}", currentProfile.DefaultFileName);
         UpdateProfileNameLabel(currentProfile.FileName);
         timeKeeper.LoadCurrentPomodoro();
         themeManager.LoadProfileColors();
         
-        //GenerateProfilesDisplay(currentProfile.DefaultFileName);
         GeneratePomodorosDisplay();
         InitializeSoundsList();
         GenerateSoundsListFromPomodoros();
-        //backgroundImage.ChangeBackgroundImage(currentProfile.profileData.BackgroundImagePath);
         ChangeBackgroundImage(currentProfile.profileData.BackgroundImagePath);
     }
 
     private void OnApplicationQuit()
     {
         // the data gets saved to the last filepath, so I need to reset it to default first before autosaving
-        //currentProfile.ChangeFileName(currentProfile.DefaultFileName);
-        //JsonIO.Save(currentProfile.profileData);
-        //currentProfile.SaveCurrentProfile();
         string lastProfile = currentProfile.DefaultFileName;
         if(currentProfile.FileName != currentProfile.DefaultFileName)
         {
