@@ -1,4 +1,4 @@
-# Pomodoro-App
+# Pomodoro App
 A customizable Pomodoro application
 
 ## Instructions
